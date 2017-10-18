@@ -1,0 +1,14 @@
+node: {{ getenv "node" }}
+witness: {{ getenv "witness" }}
+keys:
+  - {{ getenv "keys" }}
+
+# how often calculate price
+interval: {{ getenv "interval" }}
+
+# force update price if previous price expired
+max_age: {{ getenv "max_age" }}
+
+# update price only if difference between old and current price more than threshold
+threshold: {{ getenv "threshold" }}
+
