@@ -44,7 +44,7 @@ Docker friendly
 Example exec in plain docker:
 
 ```
-docker run -it --rm -e WITNESS=foo -e KEY=WIF_PRIVKEY golos-witness-tools:latest ./update_price_feed.py --dry-run
+docker run -it --rm -e WITNESS=foo -e KEY=WIF_PRIVKEY vvk123/golos-witness-tools:latest ./update_price_feed.py --dry-run
 ```
 
 How it works

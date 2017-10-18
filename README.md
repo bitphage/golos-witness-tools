@@ -22,5 +22,5 @@ Running scripts in docker
 -------------------------
 
 ```
-docker run -it --rm golos-witness-tools:latest ./update_price_feed.py --dry-run
+docker run -it --rm vvk123/golos-witness-tools:latest ./update_price_feed.py --dry-run
 ```
