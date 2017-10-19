@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  tools:
+    environment:
+      NODE: wss://api.golos.cf
+      WITNESS: foo
+      KEY: WIF-PRIVATE-KEY
+    image: vvk/golos-witness-tools
+    command: ./update_price_feed.py --monitor

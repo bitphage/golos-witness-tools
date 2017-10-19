@@ -21,6 +21,17 @@ pip3 install -r requirements.txt
 Running scripts in docker
 -------------------------
 
+Plain docker example:
+
 ```
 docker run -it --rm vvk123/golos-witness-tools:latest ./update_price_feed.py --dry-run
+```
+
+docker-compose:
+
+* copy docker-compose.yml.example to docker-compose.yml
+* adjust environment variables in docker-compose.yml. Look for all env vars in `docker-entrypoint.sh`
+
+```
+docker-compose up -d
 ```

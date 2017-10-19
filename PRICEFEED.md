@@ -47,6 +47,8 @@ Example exec in plain docker:
 docker run -it --rm -e WITNESS=foo -e KEY=WIF_PRIVKEY vvk123/golos-witness-tools:latest ./update_price_feed.py --dry-run
 ```
 
+Or use docker-compose.yml.example for **docker-compose(1)**.
+
 How it works
 ------------
 
