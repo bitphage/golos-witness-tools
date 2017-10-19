@@ -293,7 +293,12 @@ def publish_price(steem_instance, price):
     # we should publish feed in format 0.000
     final_gbg_price = format(price, '.3f')
     log.info('Price to publish: %s' % final_gbg_price)
-    steem_instance.witness_feed_publish(price, quote='1.000')
+    try:
+        steem_instance.witness_feed_publish(price, quote='1.000')
+    except Exception as e:
+        log.error(e)
+        return False
+
 
 def main():
 
