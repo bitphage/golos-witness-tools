@@ -94,8 +94,8 @@ def get_price_gold():
         sys.exit(1)
 
 def get_price_usd_btc_exchanges():
-
     """ returns average BTC/USD price across some exchanges"""
+
     prices = {}
     try:
         r = requests.get("https://api.bitfinex.com/v1/pubticker/BTCUSD").json()
@@ -123,7 +123,8 @@ def get_price_usd_btc_exchanges():
     return avg_price
 
 def get_price_bittrex(cur1, cur2):
-    """ Calculate cur1 to cur2 price based on exchangers history """
+    """ Calculate cur1 to cur2 price based on bittrex trade history """
+
     try:
         payload = {'market': '{}-{}'.format(cur1, cur2)}
         bt_h = requests.get("https://bittrex.com/api/v1.1/public/getmarkethistory", params=payload)
@@ -143,6 +144,7 @@ def get_price_bittrex(cur1, cur2):
 
 def get_price_usd_btc_coinmarketcap():
     """ returns USD/BTC price from coinmarketcap.org """
+
     try:
         r = requests.get('https://api.coinmarketcap.com/v1/ticker/bitcoin/')
     except Exception as e:
@@ -154,6 +156,7 @@ def get_price_usd_btc_coinmarketcap():
 
 def get_price_btc_golos_coinmarketcap():
     """ returns BTC/GOLOS price from coinmarketcap.org """
+
     try:
         r = requests.get('https://api.coinmarketcap.com/v1/ticker/golos/')
     except Exception as e:
@@ -164,6 +167,7 @@ def get_price_btc_golos_coinmarketcap():
 
 def get_price_btc_gbg_coinmarketcap():
     """ returns BTC/GBG price from coinmarketcap.org """
+
     try:
         r = requests.get('https://api.coinmarketcap.com/v1/ticker/golos-gold/')
     except Exception as e:
