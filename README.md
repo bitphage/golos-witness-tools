@@ -16,6 +16,7 @@ mkdir venv
 virtualenv -p python3 venv
 source ./venv/bin/activate
 pip3 install -r requirements.txt
+./update_price_feed.py --dry-run
 ```
 
 Running scripts in docker
