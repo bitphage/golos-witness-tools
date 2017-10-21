@@ -284,9 +284,14 @@ def last_price_too_old(steem_instance, witness, max_age):
     w = Witness(witness, steem_instance)
     l = w['last_sbd_exchange_update']
     last_update = datetime.strptime(l, '%Y-%m-%dT%H:%M:%S')
+    log.debug('last price update: %s', last_update)
+    log.debug('max_age: %s', max_age)
 
     delta = datetime.utcnow() - last_update
-    if delta.seconds > max_age:
+    log.debug('time passed since last update: %s', delta.total_seconds())
+
+    if delta.total_seconds() > max_age:
+        log.debug('last_price_too_old(): need price update')
         return True
     else:
         return False
@@ -346,26 +351,35 @@ def main():
 
     # main loop
     while True:
+        # flag variable which determine should we actually update price or not
+        need_publish = False
+
+        # calculate prices
         price = calculate_gbg_golos_price()
         old_price = get_old_price(golos, conf['witness'])
         median_price = get_median_price(golos)
 
-        if args.dry_run:
-            log.info('--dry-run mode, not publishing feed')
+        # check whether our price is too old
+        last_price_update_too_old = last_price_too_old(golos, conf['witness'], conf['max_age'])
+        if last_price_update_too_old:
+            log.info('Our last price update older than max_age, forcing update')
+            need_publish = True
+
+        # check for price difference between our old price and new price
+        diff = abs(old_price - price)
+        if diff > conf['threshold']:
+            log.info('publishing price, difference is: %s', diff)
+            need_publish = True
         else:
-            # check whether our price is too old
-            last_price_update_too_old = last_price_too_old(golos, conf['witness'], conf['max_age'])
-            if last_price_update_too_old:
-                log.info('Our last price was updated long ago, forcing update')
-                publish_price(golos, price)
+            log.debug('price difference is too low, not publishing price')
+
+        # finally publish price if needed
+        if need_publish == True:
+            if args.dry_run:
+                log.info('--dry-run mode, not publishing price feed')
             else:
-                # check for price difference between our old price and new price
-                diff = abs(old_price - price)
-                if diff > conf['threshold']:
-                    log.info('publishing price, difference is: %s', diff)
-                    publish_price(golos, price)
-                else:
-                    log.debug('price difference is too low, not publishing price')
+                publish_price(golos, price)
+
 
         if args.monitor:
             time.sleep(conf['interval'])
