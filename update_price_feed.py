@@ -314,6 +314,7 @@ def main():
     parser = argparse.ArgumentParser(
             description='golos price feed updater',
             epilog='Report bugs to https://github.com/bitfag/golos-witness-tools/issues')
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s 1710.1')
     parser.add_argument('-c', '--config', default='./update_price_feed.yml',
             help='specify custom path for config file')
     parser.add_argument('-n', '--dry-run', action='store_true',
