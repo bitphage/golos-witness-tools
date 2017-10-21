@@ -296,14 +296,14 @@ def last_price_too_old(steem_instance, witness, max_age):
     else:
         return False
 
-def publish_price(steem_instance, price):
+def publish_price(steem_instance, price, account=False):
     """ broadcast calculated price to the network """
 
     # we should publish feed in format 0.000
     final_gbg_price = format(price, '.3f')
     log.info('Price to publish: %s' % final_gbg_price)
     try:
-        steem_instance.witness_feed_publish(price, quote='1.000')
+        steem_instance.witness_feed_publish(price, quote='1.000', account=account)
     except Exception as e:
         log.error(e)
         return False
@@ -317,10 +317,14 @@ def main():
     parser.add_argument('-v', '--version', action='version', version='%(prog)s 1710.1')
     parser.add_argument('-c', '--config', default='./update_price_feed.yml',
             help='specify custom path for config file')
-    parser.add_argument('-n', '--dry-run', action='store_true',
-        help='calculate prices but do not send transaction to golos network')
     parser.add_argument('-m', '--monitor', action='store_true',
-        help='run in continuous mode and update price periodically')
+            help='run in continuous mode and update price periodically')
+
+    publish_args = parser.add_mutually_exclusive_group()
+    publish_args.add_argument('-n', '--dry-run', action='store_true',
+            help='calculate prices but do not send transaction to golos network')
+    publish_args.add_argument('-f', '--force', action='store_true',
+            help='force update price feed')
 
     verbosity_args = parser.add_mutually_exclusive_group()
     verbosity_args.add_argument('-q', '--quiet', action='store_true',
@@ -375,11 +379,11 @@ def main():
             log.debug('price difference is too low, not publishing price')
 
         # finally publish price if needed
-        if need_publish == True:
-            if args.dry_run:
+        if need_publish == True or args.force == True:
+            if args.dry_run and args.force == False:
                 log.info('--dry-run mode, not publishing price feed')
             else:
-                publish_price(golos, price)
+                publish_price(golos, price, account=conf['witness'])
 
 
         if args.monitor:
