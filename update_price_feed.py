@@ -263,12 +263,17 @@ def get_median_price(steem_instance):
     log.info('Current median price: %s', price)
     return price
 
-def get_old_price(steem_instance, witness):
-    """ obtain current published price for witness """
+def get_witness(steem_instance, witness):
+    """ call get_witness_by_account and return Witness object """
 
     w = Witness(witness, steem_instance)
-    base = float(w['sbd_exchange_rate']['base'].split()[0])
-    quote = float(w['sbd_exchange_rate']['quote'].split()[0])
+    return w
+
+def get_old_price(witness_data):
+    """ obtain current published price for witness """
+
+    base = float(witness_data['sbd_exchange_rate']['base'].split()[0])
+    quote = float(witness_data['sbd_exchange_rate']['quote'].split()[0])
 
     # whether witness not exists yet, return 0
     if quote == 0:
@@ -278,11 +283,10 @@ def get_old_price(steem_instance, witness):
         log.info('Old price: %s', price)
         return price
 
-def last_price_too_old(steem_instance, witness, max_age):
+def last_price_too_old(witness_data, max_age):
     """ Check last price update time and return True or False """
 
-    w = Witness(witness, steem_instance)
-    l = w['last_sbd_exchange_update']
+    l = witness_data['last_sbd_exchange_update']
     last_update = datetime.strptime(l, '%Y-%m-%dT%H:%M:%S')
     log.debug('last price update: %s', last_update)
     log.debug('max_age: %s', max_age)
@@ -314,7 +318,7 @@ def main():
     parser = argparse.ArgumentParser(
             description='golos price feed updater',
             epilog='Report bugs to https://github.com/bitfag/golos-witness-tools/issues')
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s 1710.2')
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s 1710.3')
     parser.add_argument('-c', '--config', default='./update_price_feed.yml',
             help='specify custom path for config file')
     parser.add_argument('-m', '--monitor', action='store_true',
@@ -359,13 +363,16 @@ def main():
         # flag variable which determine should we actually update price or not
         need_publish = False
 
+        # request current witness info
+        witness_data = get_witness(golos, conf['witness'])
+
         # calculate prices
         price = calculate_gbg_golos_price()
-        old_price = get_old_price(golos, conf['witness'])
+        old_price = get_old_price(witness_data)
         median_price = get_median_price(golos)
 
         # check whether our price is too old
-        last_price_update_too_old = last_price_too_old(golos, conf['witness'], conf['max_age'])
+        last_price_update_too_old = last_price_too_old(witness_data, conf['max_age'])
         if last_price_update_too_old:
             log.info('Our last price update older than max_age, forcing update')
             need_publish = True
