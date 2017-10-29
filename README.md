@@ -7,6 +7,7 @@ Scripts
 -------
 
 * [**update\_price\_feed.py**](PRICEFEED.md): script to update GBG/GOLOS price feed in golos blockchain
+* [**update_witness.py**](UPDATE_WITNESS.md): script to manipulate witness data in the blockchain
 
 Running scripts in virtualenv
 -----------------------------

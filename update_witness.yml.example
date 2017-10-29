@@ -1,0 +1,12 @@
+node: ws://localhost:8090
+witness: foo
+keys:
+  - wif_private_key
+
+witness_pubkey: your_witness_pub_key
+url: https://golos.io/@foo
+props:
+  account_creation_fee: "3.000 GOLOS"
+  maximum_block_size: 65536
+  sbd_interest_rate: 1000
+  fee: "1.000 GBG"
