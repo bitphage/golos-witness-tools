@@ -9,6 +9,8 @@ from piston.witness import Witness
 from datetime import datetime
 from datetime import timedelta
 
+log = logging.getLogger('functions')
+
 def update_witness(steem_instance, signing_key, url, props, account):
 
     log.debug('args: %s', locals())
@@ -36,8 +38,6 @@ def main():
     args = parser.parse_args()
 
     # create logger
-    global log
-    log = logging.getLogger('update_witness.py')
     if args.quiet == True:
         log.setLevel(logging.ERROR)
     elif args.debug == True:
