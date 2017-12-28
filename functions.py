@@ -151,7 +151,7 @@ def get_price_bittrex(cur1, cur2):
         log.error("Error in fetching Bittrex market history")
         sys.exit(1)
 
-    price = cur1_quantity/cur2_quantity
+    price = cur2_quantity/cur1_quantity
     return price
 
 def get_price_usd_btc_coinmarketcap():
