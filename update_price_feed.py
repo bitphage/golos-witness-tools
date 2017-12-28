@@ -97,40 +97,45 @@ def main():
         # flag variable which determine should we actually update price or not
         need_publish = False
 
-        # request current witness info
-        witness_data = get_witness(golos, conf['witness'])
+        try:
+            # request current witness info
+            witness_data = get_witness(golos, conf['witness'])
 
-        # calculate prices
-        price = calculate_gbg_golos_price()
-        old_price = get_old_price(witness_data)
-        median_price = get_median_price(golos)
+            # calculate prices
+            price = calculate_gbg_golos_price()
+            old_price = get_old_price(witness_data)
+            median_price = get_median_price(golos)
 
-        # check whether our price is too old
-        last_price_update_too_old = last_price_too_old(witness_data, conf['max_age'])
-        if last_price_update_too_old:
-            log.info('Our last price update older than max_age, forcing update')
-            need_publish = True
+            # check whether our price is too old
+            last_price_update_too_old = last_price_too_old(witness_data, conf['max_age'])
+            if last_price_update_too_old:
+                log.info('Our last price update older than max_age, forcing update')
+                need_publish = True
 
-        # check for price difference between our old price and new price
-        diff = abs(old_price - price)
-        if diff > conf['threshold']:
-            log.info('publishing price, difference is: %s', diff)
-            need_publish = True
-        else:
-            log.debug('price difference is too low, not publishing price')
-
-        # finally publish price if needed
-        if need_publish == True or args.force == True:
-            if args.dry_run and args.force == False:
-                log.info('--dry-run mode, not publishing price feed')
+            # check for price difference between our old price and new price
+            diff = abs(old_price - price)
+            if diff > conf['threshold']:
+                log.info('publishing price, difference is: %s', diff)
+                need_publish = True
             else:
-                publish_price(golos, price, account=conf['witness'])
+                log.debug('price difference is too low, not publishing price')
 
+            # finally publish price if needed
+            if need_publish == True or args.force == True:
+                if args.dry_run and args.force == False:
+                    log.info('--dry-run mode, not publishing price feed')
+                else:
+                    publish_price(golos, price, account=conf['witness'])
 
-        if args.monitor:
-            time.sleep(conf['interval'])
-        else:
-            sys.exit(0)
+        except Exception as e:
+            log.error('exception in main loop: %s', e)
+
+        finally:
+
+            if args.monitor:
+                time.sleep(conf['interval'])
+            else:
+                sys.exit(0)
 
 if __name__ == '__main__':
     main()
