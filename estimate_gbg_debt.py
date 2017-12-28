@@ -58,19 +58,25 @@ def main():
     sbd_supply = Amount(props['current_sbd_supply'])
     current_supply = Amount(props['current_supply'])
     virtual_supply = Amount(props['virtual_supply'])
+    total_reward_fund_steem = Amount(props['total_reward_fund_steem'])
 
     median = get_median_price(golos)
 
     # libraries/chain/database.cpp
     # this min_price caps system debt to 10% of GOLOS market capitalisation
     min_price = 9 * sbd_supply.amount / current_supply.amount
-    log.info('min_price GBG/GOLOS possible: {:.3f}'.format(min_price))
+    log.info('Minimal possible median price GBG/GOLOS: {:.3f}'.format(min_price))
 
     # #define STEEMIT_100_PERCENT 10000
     # this is current GBG percent printed
     percent_sbd = sbd_supply.amount / median * 100 / virtual_supply.amount
     log.info('percent GBG: {:.3f}'.format(percent_sbd))
-    log.info('GBG print rate: {:.2f}'.format(props['sbd_print_rate']/100))
+
+    sbd_print_rate = props['sbd_print_rate']/100
+    log.info('GBG print rate: {:.2f}'.format(sbd_print_rate))
+    log.info('Approximate GBG emission per day: {:.0f}'.format(
+        (total_reward_fund_steem.amount / 2) * median * sbd_print_rate / 100)
+        )
 
 if __name__ == '__main__':
     main()
