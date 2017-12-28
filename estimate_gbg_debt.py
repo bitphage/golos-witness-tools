@@ -33,7 +33,7 @@ def main():
             description='Estimate GBG debt values',
             epilog='Report bugs to: https://github.com/bitfag/golos-witness-tools/issues')
     parser.add_argument('-d', '--debug', action='store_true',
-        help='enable debug output'),
+            help='enable debug output'),
     parser.add_argument('-c', '--config', default='./common.yml',
             help='specify custom path for config file')
     args = parser.parse_args()
