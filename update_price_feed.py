@@ -17,35 +17,35 @@ def calculate_gbg_golos_price():
 
     # market price USD/gold
     price_mg_gold = get_price_gold()
-    log.info('USD/gold: %s', price_mg_gold)
+    log.info('USD/gold: {:.4f}'.format(price_mg_gold))
 
     # market price USD/BTC
     usd_btc = get_price_usd_btc()
-    log.info('USD/BTC: %s', usd_btc)
+    log.info('USD/BTC: {:.0f}'.format(usd_btc))
 
     # market price BTC/GOLOS
     btc_golos = get_price_btc_golos()
-    log.info('BTC/GOLOS: %s', format(btc_golos, '.8f'))
+    log.info('BTC/GOLOS: {:.8f}'.format(btc_golos))
 
     # market price BTC/GBG just for analytics
     price_btc_gbg = get_price_btc_gbg()
-    log.info('BTC/GBG: %s', format(price_btc_gbg, '.8f'))
+    log.info('BTC/GBG: {:.8f}'.format(price_btc_gbg))
 
     # calculated price BTC/gold just for analytics
     price_btc_gold = price_mg_gold/usd_btc
-    log.info('BTC/gold: %s', format(price_btc_gold, '.8f'))
+    log.info('BTC/gold: {:.8f}'.format(price_btc_gold))
 
     # BTC/GBG / BTC/gold rate just for analytics
     gbg_gold_rate = price_btc_gbg/price_btc_gold
-    log.info('GBG/gold rate: %s', gbg_gold_rate)
+    log.info('GBG/gold rate: {:.2f}'.format(gbg_gold_rate))
 
     # calculated price USD/golos just for analytics
-    price_usd_golos = btc_golos*usd_btc
-    log.info('USD/GOLOS: %s', price_usd_golos)
+    price_usd_golos = btc_golos * usd_btc
+    log.info('USD/GOLOS: {:.2f}'.format(price_usd_golos))
 
     # how many mgs of gold in 1 GOLOS == GOLOS/GBG (1 GBG == 1 mg gold)
     price_gold_golos = price_usd_golos / price_mg_gold
-    log.info('GBG/GOLOS: %s', price_gold_golos)
+    log.info('GBG/GOLOS: {:.3f}'.format(price_gold_golos))
 
     return price_gold_golos
 
@@ -109,7 +109,7 @@ def main():
             # apply correction if k defined
             if 'k' in conf:
                 price = price * conf['k']
-                log.info('price after correction: {:.8f}'.format(price))
+                log.info('price after correction: {:.3f}'.format(price))
 
             # check whether our price is too old
             last_price_update_too_old = last_price_too_old(witness_data, conf['max_age'])
@@ -120,7 +120,7 @@ def main():
             # check for price difference between our old price and new price
             diff = abs(old_price - price)
             if diff > conf['threshold']:
-                log.info('publishing price, difference is: %s', diff)
+                log.info('publishing price, difference is: {:.3f}'.format(diff))
                 need_publish = True
             else:
                 log.debug('price difference is too low, not publishing price')
