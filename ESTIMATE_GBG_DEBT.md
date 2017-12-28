@@ -6,6 +6,7 @@ This script is intended to estimate following values:
 * **Possible minimal price of GBG/GOLOS.** This price limits GBG debt to 10% of GOLOS market cap. Witnesses just can't set lower price than that.
 * **Percent GBG.** This value is shows current system debt size. It is ratio of `sbd\_supply/median_price / virtual supply`
 * **GBG print rate.** This value show the which percent of 1/2 author's reward will go to GBG. The remain will go to the GOLOS.
+* **Approximate BTC/GOLOS price at 10%-debt point.** How low market price should become to reach 10% system debt.
 
 System logic
 ------------
