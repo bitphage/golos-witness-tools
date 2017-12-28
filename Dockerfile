@@ -9,7 +9,10 @@ COPY docker/confd/templates/* /etc/confd/templates/
 COPY docker/confd/toml/* /etc/confd/conf.d/
 
 RUN set -xe ;\
-    pip3 install --no-cache-dir -r $INSTALLDIR/requirements.txt
+    pip install --no-cache-dir -r $INSTALLDIR/requirements.txt ;\
+    # FIXME: temp hack around pycrypto
+    pip uninstall -y pycrypto pycryptodome ;\
+    pip install pycryptodome
 
 ENV CONFD_VERSION 0.13.0
 ADD https://github.com/kelseyhightower/confd/releases/download/v$CONFD_VERSION/confd-$CONFD_VERSION-linux-amd64 /usr/local/bin/confd
