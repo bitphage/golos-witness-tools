@@ -7,25 +7,10 @@ import yaml
 
 from piston import Steem
 from piston.amount import Amount
-from piston.converter import Converter
 
-log = logging.getLogger(sys.argv[0])
+import functions
 
-
-def get_median_price(steem_instance):
-    """ get current median GBG/GOLOS price from network
-    """
-
-    cv = Converter(steem_instance)
-    try:
-        price = cv.sbd_median_price()
-    except Exception as e:
-        log.error(e)
-        return False
-
-    log.debug('current median price: %s', price)
-    return price
-
+log = logging.getLogger('functions')
 
 def main():
 
@@ -60,7 +45,7 @@ def main():
     virtual_supply = Amount(props['virtual_supply'])
     total_reward_fund_steem = Amount(props['total_reward_fund_steem'])
 
-    median = get_median_price(golos)
+    median = functions.get_median_price(golos)
 
     # libraries/chain/database.cpp
     # this min_price caps system debt to 10% of GOLOS market capitalisation
