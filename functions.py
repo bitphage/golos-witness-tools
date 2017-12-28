@@ -223,6 +223,7 @@ def get_price_btc_golos():
         return float(price)
     price = get_price_bittrex('BTC', 'GOLOS')
     if price:
+        log.debug('BTC/GOLOS price taken from bittrex')
         return float(price)
     else:
         log.error('failed to obtain BTC/GOLOS price from any source')
