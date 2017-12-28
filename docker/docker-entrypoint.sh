@@ -12,6 +12,7 @@ export key="${KEY:-key}"
 export interval="${INTERVAL:-3600}"
 export max_age="${MAX_AGE:-86400}"
 export threshold="${THRESHOLD:-0.15}"
+export k="${K:-1}"
 
 render_templates
 exec "$@"

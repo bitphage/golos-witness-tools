@@ -6,5 +6,6 @@ services:
       NODE: wss://api.golos.cf
       WITNESS: foo
       KEY: WIF-PRIVATE-KEY
-    image: vvk/golos-witness-tools
+      K: 1
+    image: vvk123/golos-witness-tools
     command: ./update_price_feed.py --monitor

@@ -12,3 +12,5 @@ max_age: {{ getenv "max_age" }}
 # update price only if difference between old and current price more than threshold
 threshold: {{ getenv "threshold" }}
 
+# price correction coefficient (default: don't touch automatic price)
+k: {{ getenv "k" }}

@@ -106,6 +106,11 @@ def main():
             old_price = get_old_price(witness_data)
             median_price = get_median_price(golos)
 
+            # apply correction if k defined
+            if 'k' in conf:
+                price = price * conf['k']
+                log.info('price after correction: {:.8f}'.format(price))
+
             # check whether our price is too old
             last_price_update_too_old = last_price_too_old(witness_data, conf['max_age'])
             if last_price_update_too_old:
