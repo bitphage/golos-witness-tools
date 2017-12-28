@@ -143,7 +143,7 @@ def get_price_bittrex(cur1, cur2):
         bt_hist = bt_h.json()
         cur1_quantity = 0
         cur2_quantity = 0
-        for i in range(200):
+        for i in range(100):
             cur1_quantity += bt_hist["result"][i]["Quantity"]
             cur2_quantity += bt_hist["result"][i]["Total"]
     except Exception as e:
