@@ -1,6 +1,5 @@
 import logging
 import time
-import sys
 import requests
 
 from xml.dom.minidom import parseString
@@ -102,8 +101,8 @@ def get_price_gold():
         log.debug('USD/gold price taken from Russian Central Bank')
         return price
     else:
-        log.critical('failed to obtain USD/gold price from any source, cannot continue')
-        sys.exit(1)
+        log.critical('failed to obtain USD/gold price from any source')
+        return False
 
 def get_price_usd_btc_exchanges():
     """ returns average BTC/USD price across some exchanges"""
@@ -149,7 +148,7 @@ def get_price_bittrex(cur1, cur2):
     except Exception as e:
         log.error(e)
         log.error("Error in fetching Bittrex market history")
-        sys.exit(1)
+        return False
 
     price = cur2_quantity/cur1_quantity
     return price
@@ -196,10 +195,11 @@ def get_price_usd_btc():
         return float(price)
     price = get_price_usd_btc_exchanges()
     if price:
+        log.debug('USD/BTC price taken from exchanges')
         return float(price)
     else:
-        log.critical('failed to obtain USD/BTC price from any source, cannot continue')
-        sys.exit(1)
+        log.error('failed to obtain USD/BTC price from any source')
+        return False
 
 def get_price_btc_gbg():
     """ wrapper function to obtain BTC/GBG price """
@@ -212,8 +212,7 @@ def get_price_btc_gbg():
     if price:
         return float(price)
     else:
-        log.critical('failed to obtain BTC/GBG price from any source, cannot continue')
-        sys.exit(1)
+        log.critical('failed to obtain BTC/GBG price from any source')
 
 def get_price_btc_golos():
     """ wrapper function to obtain BTC/GOLOS price """
@@ -226,8 +225,8 @@ def get_price_btc_golos():
     if price:
         return float(price)
     else:
-        log.critical('failed to obtain BTC/GOLOS price from any source, cannot continue')
-        sys.exit(1)
+        log.error('failed to obtain BTC/GOLOS price from any source')
+        return False
 
 
 def get_witness(steem_instance, witness):
