@@ -274,7 +274,7 @@ def publish_price(steem_instance, price, account=False):
     final_gbg_price = format(price, '.3f')
     log.info('Price to publish: %s' % final_gbg_price)
     try:
-        steem_instance.witness_feed_publish(price, quote='1.000', account=account)
+        steem_instance.witness_feed_publish(final_gbg_price, quote='1.000', account=account)
     except Exception as e:
         log.error(e)
         return False
