@@ -34,7 +34,7 @@ def get_price_gold_goldpriceorg():
 
     price_troyounce = 0;
     try:
-        r = requests.get("http://data-asg.goldprice.org/GetData/USD-XAU/1").json()
+        r = requests.get("http://data-asg.goldprice.org/GetData/USD-XAU/1", timeout=5).json()
         price_troyounce = float(r[0].split(',')[1])
     except Exception as e:
         log.error(e)
@@ -53,7 +53,7 @@ def get_price_gold_cbr():
     # cbr may return an empty value on Monday, so request 2 days history
     payload = {'date_req1': yesterday.strftime('%d/%m/%Y'), 'date_req2': today.strftime('%d/%m/%Y')}
     try:
-        r = requests.get('http://www.cbr.ru/scripts/xml_metall.asp', params=payload)
+        r = requests.get('http://www.cbr.ru/scripts/xml_metall.asp', params=payload, timeout=5)
     except Exception as e:
         log.error(e)
         return False
@@ -72,7 +72,7 @@ def get_rub_usd_price():
     """ get RUB/USD price from Russian Central Bank API mirror """
 
     try:
-        r = requests.get('https://www.cbr-xml-daily.ru/daily_json.js')
+        r = requests.get('https://www.cbr-xml-daily.ru/daily_json.js', timeout=5)
     except Exception as e:
         log.error(e)
         return False
@@ -110,17 +110,17 @@ def get_price_usd_btc_exchanges():
 
     prices = {}
     try:
-        r = requests.get("https://api.bitfinex.com/v1/pubticker/BTCUSD").json()
+        r = requests.get("https://api.bitfinex.com/v1/pubticker/BTCUSD", timeout=5).json()
         prices['bitfinex'] = {'price': float(r['last_price']), 'volume': float(r['volume'])}
     except:
         pass
     try:
-        r = requests.get("https://api.exchange.coinbase.com/products/BTC-USD/ticker").json()
+        r = requests.get("https://api.exchange.coinbase.com/products/BTC-USD/ticker", timeout=5).json()
         prices['coinbase'] = {'price': float(r['price']), 'volume': float(r['volume'])}
     except:
         pass
     try:
-        r = requests.get("https://www.bitstamp.net/api/v2/ticker/btcusd/").json()
+        r = requests.get("https://www.bitstamp.net/api/v2/ticker/btcusd/", timeout=5).json()
         prices['bitstamp'] = {'price': float(r['last']), 'volume': float(r['volume'])}
     except:
         pass
@@ -139,7 +139,7 @@ def get_price_bittrex(cur1, cur2):
 
     try:
         payload = {'market': '{}-{}'.format(cur1, cur2)}
-        bt_h = requests.get("https://bittrex.com/api/v1.1/public/getmarkethistory", params=payload)
+        bt_h = requests.get("https://bittrex.com/api/v1.1/public/getmarkethistory", params=payload, timeout=5)
         bt_hist = bt_h.json()
         cur1_quantity = 0
         cur2_quantity = 0
@@ -158,7 +158,7 @@ def get_price_usd_btc_coinmarketcap():
     """ returns USD/BTC price from coinmarketcap.org """
 
     try:
-        r = requests.get('https://api.coinmarketcap.com/v1/ticker/bitcoin/')
+        r = requests.get('https://api.coinmarketcap.com/v1/ticker/bitcoin/', timeout=5)
     except Exception as e:
         log.error(e)
         return False
@@ -169,7 +169,7 @@ def get_price_btc_golos_coinmarketcap():
     """ returns BTC/GOLOS price from coinmarketcap.org """
 
     try:
-        r = requests.get('https://api.coinmarketcap.com/v1/ticker/golos/')
+        r = requests.get('https://api.coinmarketcap.com/v1/ticker/golos/', timeout=5)
     except Exception as e:
         log.error(e)
         return False
@@ -180,7 +180,7 @@ def get_price_btc_gbg_coinmarketcap():
     """ returns BTC/GBG price from coinmarketcap.org """
 
     try:
-        r = requests.get('https://api.coinmarketcap.com/v1/ticker/golos-gold/')
+        r = requests.get('https://api.coinmarketcap.com/v1/ticker/golos-gold/', timeout=5)
     except Exception as e:
         log.error(e)
         return False
