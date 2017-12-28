@@ -105,6 +105,7 @@ def main():
             price = calculate_gbg_golos_price()
             old_price = get_old_price(witness_data)
             median_price = get_median_price(golos)
+            log.info('Current median price: {:.3f}'.format(median_price))
 
             # apply correction if k defined
             if 'k' in conf:
