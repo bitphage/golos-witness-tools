@@ -71,9 +71,13 @@ def main():
     price_btc_gold = price_mg_gold / usd_btc
     # BTC/GOLOS
     price_btc_golos = functions.get_price_btc_golos()
+    # BTC/GBG, external
+    price_btc_gbg = functions.get_price_btc_gbg()
 
-    log.info('External price BTC/gold: {:.8f}'.format(price_btc_gold))
     log.info('Median-derived price BTC/gold: {:.8f}'.format(price_btc_golos/median))
+    log.info('External price BTC/gold: {:.8f}'.format(price_btc_gold))
+    log.info('External price BTC/GBG: {:.8f}'.format(price_btc_gbg))
+    log.info('GBG/gold rate: {:.2f}'.format(price_btc_gbg/price_btc_gold))
     log.info('Current external price BTC/GOLOS: {:.8f}'.format(price_btc_golos))
     log.info('Approximate BTC/GOLOS price at 2%-debt point: {:.8f}'.format(price_btc_gold*min_price*5))
     log.info('Approximate BTC/GOLOS price at 5%-debt point: {:.8f}'.format(price_btc_gold*min_price*2))
