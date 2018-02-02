@@ -55,7 +55,7 @@ def main():
     # #define STEEMIT_100_PERCENT 10000
     # this is current GBG percent printed
     percent_sbd = sbd_supply.amount / median * 100 / virtual_supply.amount
-    log.info('percent GBG: {:.3f}'.format(percent_sbd))
+    log.info('System GBG debt percent: {:.3f}'.format(percent_sbd))
 
     sbd_print_rate = props['sbd_print_rate']/100
     log.info('GBG print rate: {:.2f}'.format(sbd_print_rate))
