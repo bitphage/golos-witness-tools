@@ -63,8 +63,11 @@ def main():
         (total_reward_fund_steem.amount / 2) * median * sbd_print_rate / 100)
         )
 
+    # USD/gold price
     price_mg_gold = functions.get_price_gold()
+    # USD/BTC
     usd_btc = functions.get_price_usd_btc()
+    # BTC/GOLD
     price_btc_gold = price_mg_gold / usd_btc
 
     log.info('Current external price BTC/GOLOS: {:.8f}'.format(functions.get_price_btc_golos()))
