@@ -21,6 +21,8 @@ def main():
             help='enable debug output'),
     parser.add_argument('-c', '--config', default='./common.yml',
             help='specify custom path for config file')
+    parser.add_argument('--usd', action='store_true',
+            help='display debt points in USD')
     args = parser.parse_args()
 
 
@@ -79,9 +81,15 @@ def main():
     log.info('External price BTC/GBG: {:.8f}'.format(price_btc_gbg))
     log.info('GBG/gold rate: {:.2f}'.format(price_btc_gbg/price_btc_gold))
     log.info('Current external price BTC/GOLOS: {:.8f}'.format(price_btc_golos))
-    log.info('Approximate BTC/GOLOS price at 2%-debt point: {:.8f}'.format(price_btc_gold*min_price*5))
-    log.info('Approximate BTC/GOLOS price at 5%-debt point: {:.8f}'.format(price_btc_gold*min_price*2))
-    log.info('Approximate BTC/GOLOS price at 10%-debt point: {:.8f}'.format(price_btc_gold*min_price))
+
+    if args.usd:
+        log.info('Approximate USD/GOLOS price at 2%-debt point: {:.3f}'.format(price_mg_gold*min_price*5))
+        log.info('Approximate USD/GOLOS price at 5%-debt point: {:.3f}'.format(price_mg_gold*min_price*2))
+        log.info('Approximate USD/GOLOS price at 10%-debt point: {:.3f}'.format(price_mg_gold*min_price))
+    else:
+        log.info('Approximate BTC/GOLOS price at 2%-debt point: {:.8f}'.format(price_btc_gold*min_price*5))
+        log.info('Approximate BTC/GOLOS price at 5%-debt point: {:.8f}'.format(price_btc_gold*min_price*2))
+        log.info('Approximate BTC/GOLOS price at 10%-debt point: {:.8f}'.format(price_btc_gold*min_price))
 
 if __name__ == '__main__':
     main()
