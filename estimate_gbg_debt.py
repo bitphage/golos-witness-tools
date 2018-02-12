@@ -60,10 +60,9 @@ def main():
     log.info('System GBG debt percent: {:.3f}'.format(percent_sbd))
 
     sbd_print_rate = props['sbd_print_rate']/100
+    gbg_emission = (total_reward_fund_steem.amount / 2) * median * sbd_print_rate / 100
     log.info('GBG print rate: {:.2f}'.format(sbd_print_rate))
-    log.info('Approximate GBG emission per day: {:.0f}'.format(
-        (total_reward_fund_steem.amount / 2) * median * sbd_print_rate / 100)
-        )
+    log.info('Approximate GBG emission per day: {:.0f}'.format(gbg_emission))
 
     # USD/gold price
     price_mg_gold = functions.get_price_gold()
@@ -82,11 +81,33 @@ def main():
     log.info('GBG/gold rate: {:.2f}'.format(price_btc_gbg/price_btc_gold))
     log.info('Current external price BTC/GOLOS: {:.8f}'.format(price_btc_golos))
 
+    # estimate reward fund size and price
+    gbg_reward_fund_size_nominal = gbg_emission * price_btc_gold
+    gbg_reward_fund_size_nominal_usd = gbg_reward_fund_size_nominal * usd_btc
+    gbg_reward_fund_size = gbg_emission * price_btc_gbg
+    gbg_reward_fund_size_usd = gbg_reward_fund_size * usd_btc
+
+    golos_reward_fund = total_reward_fund_steem.amount/2 \
+            + total_reward_fund_steem.amount/2 * (10000-sbd_print_rate)/10000
+    golos_reward_fund_size = golos_reward_fund * price_btc_golos
+    golos_reward_fund_size_usd = golos_reward_fund_size * usd_btc
+
+    total_reward_fund_size = gbg_reward_fund_size + golos_reward_fund_size
+    total_reward_fund_size_usd = gbg_reward_fund_size_usd + golos_reward_fund_size_usd
+
     if args.usd:
+        log.info('GBG reward fund size (nominal): ${:.0f}'.format(gbg_reward_fund_size_nominal_usd))
+        log.info('GBG reward fund size (market): ${:.0f}'.format(gbg_reward_fund_size_usd))
+        log.info('GOLOS reward fund size: ${:.0f}'.format(golos_reward_fund_size_usd))
+        log.info('Total reward fund size: ${:.0f}'.format(total_reward_fund_size_usd))
         log.info('Approximate USD/GOLOS price at 2%-debt point: {:.3f}'.format(price_mg_gold*min_price*5))
         log.info('Approximate USD/GOLOS price at 5%-debt point: {:.3f}'.format(price_mg_gold*min_price*2))
         log.info('Approximate USD/GOLOS price at 10%-debt point: {:.3f}'.format(price_mg_gold*min_price))
     else:
+        log.info('GBG reward fund size (nominal): {:.8f} BTC'.format(gbg_reward_fund_size_nominal))
+        log.info('GBG reward fund size (market): {:.8f} BTC'.format(gbg_reward_fund_size))
+        log.info('GOLOS reward fund size: {:.8f} BTC'.format(golos_reward_fund_size))
+        log.info('Total reward fund size: {:.8f} BTC'.format(total_reward_fund_size))
         log.info('Approximate BTC/GOLOS price at 2%-debt point: {:.8f}'.format(price_btc_gold*min_price*5))
         log.info('Approximate BTC/GOLOS price at 5%-debt point: {:.8f}'.format(price_btc_gold*min_price*2))
         log.info('Approximate BTC/GOLOS price at 10%-debt point: {:.8f}'.format(price_btc_gold*min_price))
