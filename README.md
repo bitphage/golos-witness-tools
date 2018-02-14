@@ -10,6 +10,7 @@ Scripts
 * [**update\_witness.py**](UPDATE_WITNESS.md): script to manipulate witness data in the blockchain
 * **get\_witness.py**: script to obtain current info for specified witness
 * [**estimate\_gbg\_debt.py**](ESTIMATE_GBG_DEBT.md): script to estimate system debt in GBG
+* **get\_median\_props.py**: script to display current votable parameters
 
 Running scripts in virtualenv
 -----------------------------
