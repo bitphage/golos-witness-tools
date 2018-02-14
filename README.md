@@ -12,6 +12,7 @@ Scripts
 * [**estimate\_gbg\_debt.py**](ESTIMATE_GBG_DEBT.md): script to estimate system debt in GBG
 * **get\_median\_props.py**: script to display current votable parameters
 * **get\_feed\_history.py**: script to obtain median price history
+* **get\_witnesses.py**: script to display known witnesses, sorted by votes
 
 Running scripts in virtualenv
 -----------------------------
