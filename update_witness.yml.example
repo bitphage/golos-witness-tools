@@ -1,8 +1,10 @@
 node: ws://localhost:8090
 witness: foo
 keys:
+  # your private active key here, used to sign transactions
   - wif_private_key
 
+# public key of your witness; private part should be used in golosd config.ini as `private-key`
 witness_pubkey: your_witness_pub_key
 url: https://golos.io/@foo
 props:
