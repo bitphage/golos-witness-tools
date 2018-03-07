@@ -11,7 +11,7 @@ interval: 3600
 max_age: 86400
 
 # update price only if difference between old and current price more than threshold
-threshold: 0.15
+threshold: 0.05
 
 # price correction coefficient (default: don't touch automatic price)
 k: 1
