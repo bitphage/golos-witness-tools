@@ -39,7 +39,7 @@ def main():
     with open(args.config, 'r') as ymlfile:
         conf = yaml.load(ymlfile)
 
-    golos = Steem(nodes=conf['node'], nobroadcast=True)
+    golos = Steem(node=conf['node'], nobroadcast=True)
     props = golos.info()
 
     sbd_supply = Amount(props['current_sbd_supply'])
