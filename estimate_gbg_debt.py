@@ -64,6 +64,12 @@ def main():
     log.info('GBG print rate: {:.2f}'.format(sbd_print_rate))
     log.info('Approximate GBG emission per day: {:.0f}'.format(gbg_emission))
 
+    if sbd_print_rate < 10000:
+        liquid_golos_emission = (total_reward_fund_steem.amount / 2) * (100 - sbd_print_rate)/100
+        log.info('Approximate liquid GOLOS emission per day: {:.0f}'.format(liquid_golos_emission))
+
+    log.info('Approximate vesting GOLOS emission per day: {:.0f}'.format(total_reward_fund_steem.amount / 2))
+
     # USD/gold price
     price_mg_gold = functions.get_price_gold()
     # USD/BTC
