@@ -23,6 +23,8 @@ def main():
             help='specify custom path for config file')
     parser.add_argument('-C', '--count', default=19,
             help='number of witnesses to get')
+    parser.add_argument('-o', '--oneline', action='store_true',
+            help='print witnesses in one line')
     args = parser.parse_args()
 
     # create logger
@@ -42,10 +44,15 @@ def main():
     golos = Steem(node=conf['node'])
 
     witnesses = golos.rpc.get_witnesses_by_vote('', args.count)
+    witness_list = list()
 
     for w in witnesses:
-        print('@{}'.format(w['owner']))
+        witness_list.append('@{}'.format(w['owner']))
 
+    if args.oneline:
+        print(' '.join(witness_list))
+    else:
+        print('\n'.join(witness_list))
 
 if __name__ == '__main__':
     main()
