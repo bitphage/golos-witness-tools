@@ -13,6 +13,7 @@ Scripts
 * **get\_median\_props.py**: script to display current votable parameters
 * **get\_feed\_history.py**: script to obtain median price history
 * **get\_witnesses.py**: script to display known witnesses, sorted by votes
+* **inflation.py**: script to model inflation
 
 Running scripts in virtualenv
 -----------------------------
