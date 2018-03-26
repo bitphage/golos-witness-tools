@@ -37,7 +37,7 @@ def main():
     # initialize steem instance
     golos = Steem(node=conf['node'], keys=conf['keys'])
 
-    median_props = golos.rpc.get_witness_schedule()['median_props']
+    median_props = golos.rpc.get_chain_properties(api='database_api')
     pprint(median_props)
 
 
