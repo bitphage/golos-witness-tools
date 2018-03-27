@@ -15,15 +15,19 @@ Scripts
 * **get\_witnesses.py**: script to display known witnesses, sorted by votes
 * **inflation.py**: script to model inflation
 
-Running scripts in virtualenv
------------------------------
+Requirements
+------------
+
+* golos node 0.17+
+
+Installation using pipenv
+-------------------------
+
+1. Install [pipenv](https://docs.pipenv.org/).
+2. Run the following code
 
 ```
-mkdir venv
-virtualenv -p python3 venv
-source ./venv/bin/activate
-pip3 install -r requirements.txt
-./update_price_feed.py --dry-run
+pipenv install
 ```
 
 Running scripts in docker
