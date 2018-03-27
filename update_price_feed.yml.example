@@ -1,5 +1,5 @@
 #node: 'wss://api.golos.cf'
-node: ws://localhost:8090
+node: ws://localhost:8091
 witness: foo
 keys:
   - WIF_PRIVATE_KEY
