@@ -43,7 +43,7 @@ def main():
 
     golos = Steem(node=conf['node'])
 
-    witnesses = golos.rpc.get_witnesses_by_vote('', args.count)
+    witnesses = golos.rpc.get_witnesses_by_vote('', args.count, api='database_api')
     witness_list = list()
 
     for w in witnesses:
