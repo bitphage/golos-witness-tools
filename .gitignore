@@ -1,4 +1,4 @@
-.swp
+*.swp
 *.yml
 venv/
 __pycache__/
