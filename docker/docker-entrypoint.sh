@@ -6,7 +6,7 @@ render_templates()
 }
 
 # default settings
-export node="${NODE:-wss://api.golos.cf}"
+export node="${NODE:-ws://golos:8091}"
 export witness="${WITNESS:-foo}"
 export key="${KEY:-key}"
 export interval="${INTERVAL:-3600}"
