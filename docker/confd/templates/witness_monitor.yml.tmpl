@@ -1,0 +1,14 @@
+node: {{ getenv "node" }}
+witness: {{ getenv "witness" }}
+keys:
+  - {{ getenv "key" }}
+
+# witness signing key for this node
+witness_pubkey: {{ getenv "witness_pubkey" }}
+
+# time in seconds to observe misses; witness key switch will happen whether
+# there are more misses than allowed_misses per miss_window
+miss_window: {{ getenv "miss_window" }}
+
+# number of missed blocks to allow without switching
+allowed_misses: {{ getenv "allowed_misses" }}

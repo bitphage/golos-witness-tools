@@ -1,0 +1,18 @@
+node: ws://localhost:8091
+
+# witness to monitor
+witness: foo
+
+# witness signing key for this node
+witness_pubkey: GLS4fdfdfdfdfdfdfd
+
+# active key for a witness account to sending transactions
+keys:
+  - 5Hfdfdfffgfghfhgffg
+
+# time in seconds to observe misses; witness key switch will happen whether
+# there are more misses than allowed_misses per miss_window
+miss_window: 60*60
+
+# number of missed blocks to allow without switching
+allowed_misses: 1

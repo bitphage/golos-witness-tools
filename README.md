@@ -8,6 +8,7 @@ Scripts
 
 * [**update\_price\_feed.py**](PRICEFEED.md): script to update GBG/GOLOS price feed in golos blockchain
 * [**update\_witness.py**](UPDATE_WITNESS.md): script to manipulate witness data in the blockchain
+* [**witness_monitor.py**](WITNESS_MONITOR.md): script to monitor block misses and autoswitch nodes
 * **get\_witness.py**: script to obtain current info for specified witness
 * **get\_witnesses.py**: script to display known witnesses, sorted by votes
 * **get\_miner\_queue.py**: script to display miner queue
@@ -47,4 +48,10 @@ docker-compose:
 
 ```
 docker-compose up -d
+```
+
+To manually build docker image:
+
+```
+docker build -t vvk123/golos-witness-tools:latest .
 ```

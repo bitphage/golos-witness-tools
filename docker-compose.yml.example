@@ -1,11 +1,39 @@
-version: '2'
-
+version: "2.2"
 services:
-  tools:
+  golos:
+    image: golos-0.17.0-lowmem:latest
+    #environment:
+    #  STEEMD_EXTRA_OPTS: --replay
+    ports:
+      - "2001:2001"
+      - "8090:8090"
+      - "8091:8091"
+    volumes:
+      - "/dev/shm:/shm"
+      - "/srv/golos:/var/lib/golosd"
+      - "./config.ini:/etc/golosd/config.ini"
+
+  pricefeed:
     environment:
-      NODE: wss://api.golos.cf
+      NODE: ws://golos:8091
       WITNESS: foo
-      KEY: WIF-PRIVATE-KEY
+      KEY: PRIVATE-ACTIVE-KEY
       K: 1
+      THRESHOLD: 0.05
     image: vvk123/golos-witness-tools
+    depends_on:
+      - golos
     command: ./update_price_feed.py --monitor
+
+  monitor:
+    environment:
+      NODE: ws://golos:8091
+      WITNESS: foo
+      KEY: PRIVATE-ACTIVE-KEY
+      WITNESS_PUBKEY: SIGNING-KEY-FOR-THIS-NODE
+      MISS_WINDOW: 3600
+      ALLOWED_MISSES: 1
+    image: vvk123/golos-witness-tools
+    depends_on:
+      - golos
+

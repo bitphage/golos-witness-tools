@@ -1,0 +1,3 @@
+[template]
+src = "witness_monitor.yml.tmpl"
+dest = "/opt/golos-witness-tools/witness_monitor.yml"
