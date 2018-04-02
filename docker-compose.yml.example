@@ -34,6 +34,7 @@ services:
       MISS_WINDOW: 3600
       ALLOWED_MISSES: 1
     image: vvk123/golos-witness-tools
+    command: ./witness_monitor.py
     depends_on:
       - golos
 
