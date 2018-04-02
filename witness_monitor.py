@@ -69,7 +69,7 @@ def main():
             try:
                 functions.update_witness(golos, conf['witness_pubkey'], w['url'], w['props'], conf['witness'])
             except Exception as e:
-                log.error('failed to update witness: %s', e)
+                log.error('failed to switch key: %s', e)
             else:
                 # reset miss_count after switch
                 miss_count = current_miss_count
