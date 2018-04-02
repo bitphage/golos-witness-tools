@@ -74,6 +74,6 @@ How it works with nodes > 2
 
 Whether you have more than 2 nodes, in case of current signing node failure, the `witness_monitor.py` on another nodes will detect misses and will perform the key switch.
 
-So, every "backup" node will try to switch block production to itself. Because it will happen with some time difference, only the least node will actually take over.
+So, if `witness_monitor.py` configuration on the backup nodes is the same, every "backup" node will try to switch block production to itself. Because it will happen with some time difference, only the least node will actually take over.
 
-There are no priorities and you cannot configure in which order your nodes should take over block production. But, actually you can simulate priorities by setting different value for an `allowed_misses` tunable.
+There are no explicit priorities and you cannot configure in which order your nodes should take over block production. But, actually you can simulate priorities by setting different value for an `allowed_misses` parameter.
