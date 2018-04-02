@@ -9,16 +9,9 @@ from piston.witness import Witness
 from datetime import datetime
 from datetime import timedelta
 
+import functions
+
 log = logging.getLogger('functions')
-
-def update_witness(steem_instance, signing_key, url, props, account):
-
-    log.debug('args: %s', locals())
-    try:
-        steem_instance.witness_update(signing_key, url, props, account=account)
-    except Exception as e:
-        log.error(e)
-        raise e
 
 def main():
 
@@ -63,7 +56,7 @@ def main():
         pubkey = conf['witness_pubkey']
 
     # update witness
-    update_witness(golos, pubkey, conf['url'], conf['props'], conf['witness'])
+    functions.update_witness(golos, pubkey, conf['url'], conf['props'], conf['witness'])
 
 if __name__ == '__main__':
     main()

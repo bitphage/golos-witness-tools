@@ -279,4 +279,14 @@ def publish_price(steem_instance, price, account=False):
         log.error(e)
         return False
 
+def update_witness(steem_instance, signing_key, url, props, account):
+    """ update witness data in the blockchain
+    """
+
+    log.debug('args: %s', locals())
+    try:
+        steem_instance.witness_update(signing_key, url, props, account=account)
+    except Exception as e:
+        log.error(e)
+        raise e
 
