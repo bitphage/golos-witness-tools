@@ -42,6 +42,17 @@ def main():
 
     golos = Steem(node=conf['node'], keys=conf['keys'])
 
+    # do not begin monitoring until node will not get synced!
+    while True:
+        props = golos.info()
+        chain_time = datetime.strptime(props['time'], '%Y-%m-%dT%H:%M:%S')
+        time_diff = datetime.utcnow() - chain_time
+        if time_diff.total_seconds() > 6:
+            log.warning('node out of sync, timediff: {}, waiting...'.format(time_diff.total_seconds()))
+            time.sleep(60)
+        else:
+            break
+
     # get current miss count to begin with
     miss_count = functions.get_witness(golos, conf['witness'])['total_missed']
     log.info('starting monitoring, current miss count: {}'.format(miss_count))
