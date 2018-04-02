@@ -51,7 +51,12 @@ def main():
 
     while True:
 
-        w = functions.get_witness(golos, conf['witness'])
+        try:
+            w = functions.get_witness(golos, conf['witness'])
+        except Exception as e:
+            log.error('failed to get witness data: %s', e)
+            time.sleep(63)
+            continue
         current_miss_count = w['total_missed']
         miss_diff = current_miss_count - miss_count
         log.debug('current miss diff: {}'.format(miss_diff))
@@ -61,9 +66,13 @@ def main():
 
             # switch witness key to us
             log.info('switching witness key, miss_diff is: {} > {}'.format(miss_diff, conf['allowed_misses']))
-            functions.update_witness(golos, conf['witness_pubkey'], w['url'], w['props'], conf['witness'])
-            # reset miss_count after switch
-            miss_count = current_miss_count
+            try:
+                functions.update_witness(golos, conf['witness_pubkey'], w['url'], w['props'], conf['witness'])
+            except Exception as e:
+                log.error('failed to update witness: %s', e)
+            else:
+                # reset miss_count after switch
+                miss_count = current_miss_count
 
         now = datetime.now()
         time_delta = now - miss_window_start_time
