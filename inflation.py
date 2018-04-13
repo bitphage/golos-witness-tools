@@ -41,6 +41,9 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
     vesting_reward_per_period = float()
     witness_reward_per_period = float()
 
+    top19_reward_per_period = float()
+    timeshare_reward_per_period = float()
+
     # increment counter each year
     i = 0
 
@@ -61,9 +64,12 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
             witness_reward = witness_reward * STEEMIT_MAX_WITNESSES
             if head_block_num % 21 == 0:
                 witness_reward = witness_reward * timeshare_weight
+                witness_reward = witness_reward / witness_pay_normalization_factor
+                timeshare_reward_per_period += witness_reward
             else:
                 witness_reward = witness_reward * top19_weight
-            witness_reward = witness_reward / witness_pay_normalization_factor
+                witness_reward = witness_reward / witness_pay_normalization_factor
+                top19_reward_per_period += witness_reward
 
             new_steem = content_reward + vesting_reward + witness_reward
 
@@ -88,6 +94,8 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
         log.info('content_reward_per_period: {:.0f}'.format(content_reward_per_period))
         log.info('vesting_reward_per_period: {:.0f}'.format(vesting_reward_per_period))
         log.info('witness_reward_per_period: {:.0f}'.format(witness_reward_per_period))
+        log.debug('timeshare witness reward per period: {:.0f}'.format(timeshare_reward_per_period))
+        log.debug('top19 witness reward per period: {:.0f}'.format(top19_reward_per_period))
         sum = content_reward_per_period + vesting_reward_per_period + witness_reward_per_period
         log.info('new_steem_per_period: {:.0f}'.format(sum))
 
