@@ -59,6 +59,7 @@ def main():
 
     miss_window_start_time = datetime.now()
     miss_window = eval(str(conf['miss_window']))
+    prev_key = str()
 
     while True:
 
@@ -72,8 +73,10 @@ def main():
         miss_diff = current_miss_count - miss_count
         log.debug('current miss diff: {}'.format(miss_diff))
 
-        # too much misses and witness running at another node
-        if miss_diff > conf['allowed_misses'] and w['signing_key'] != conf['witness_pubkey']:
+        # too much misses and witness running at another node and previous key is not ours
+        if miss_diff > conf['allowed_misses'] and \
+           w['signing_key'] != conf['witness_pubkey'] and \
+           prev_key != conf['witness_pubkey']:
 
             # switch witness key to us
             log.info('switching witness key, miss_diff is: {} > {}'.format(miss_diff, conf['allowed_misses']))
@@ -93,6 +96,9 @@ def main():
             miss_window_start_time = datetime.now()
             # reset miss_count once per miss_window
             miss_count = current_miss_count
+
+        # remember current signing key as `previous key`
+        prev_key = w['signing_key']
 
         # try to check miss counter at each round
         time.sleep(63)
