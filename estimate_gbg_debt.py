@@ -60,9 +60,10 @@ def main():
     log.info('System GBG debt percent: {:.3f}'.format(percent_sbd))
 
     sbd_print_rate = props['sbd_print_rate']/100
-    gbg_emission = (total_reward_fund_steem.amount / (2 * 7)) * median * sbd_print_rate / 100
+    gbg_emission_week = (total_reward_fund_steem.amount / 2) * median * sbd_print_rate / 100
+    gbg_emission_day = gbg_emission_week / 7
     log.info('GBG print rate: {:.2f}'.format(sbd_print_rate))
-    log.info('Approximate GBG emission per day: {:.0f}'.format(gbg_emission))
+    log.info('Approximate GBG emission per day: {:.0f}'.format(gbg_emission_day))
 
     if sbd_print_rate < 10000:
         liquid_golos_emission = (total_reward_fund_steem.amount / (2 * 7)) * (100 - sbd_print_rate)/100
@@ -88,9 +89,9 @@ def main():
     log.info('Current external price BTC/GOLOS: {:.8f}'.format(price_btc_golos))
 
     # estimate reward fund size and price
-    gbg_reward_fund_size_nominal = gbg_emission * price_btc_gold
+    gbg_reward_fund_size_nominal = gbg_emission_week * price_btc_gold
     gbg_reward_fund_size_nominal_usd = gbg_reward_fund_size_nominal * usd_btc
-    gbg_reward_fund_size = gbg_emission * price_btc_gbg
+    gbg_reward_fund_size = gbg_emission_week * price_btc_gbg
     gbg_reward_fund_size_usd = gbg_reward_fund_size * usd_btc
 
     golos_reward_fund = total_reward_fund_steem.amount/2 \
