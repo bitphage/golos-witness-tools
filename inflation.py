@@ -65,10 +65,12 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
             if head_block_num % 21 == 0:
                 witness_reward = witness_reward * timeshare_weight
                 witness_reward = witness_reward / witness_pay_normalization_factor
+                #log.debug('per block timeshare reward: {:.3f}'.format(witness_reward))
                 timeshare_reward_per_period += witness_reward
             else:
                 witness_reward = witness_reward * top19_weight
                 witness_reward = witness_reward / witness_pay_normalization_factor
+                #log.debug('per block top19 reward: {:.3f}'.format(witness_reward))
                 top19_reward_per_period += witness_reward
 
             new_steem = content_reward + vesting_reward + witness_reward
@@ -78,6 +80,7 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
             witness_reward_per_period += witness_reward
 
         virtual_supply += new_steem
+        #log.debug('per block: {}'.format(new_steem))
 
         if head_block_num % STEEMIT_BLOCKS_PER_YEAR == 0:
             i += 1
