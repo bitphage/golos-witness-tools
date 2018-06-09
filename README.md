@@ -20,7 +20,7 @@ Scripts
 Requirements
 ------------
 
-* golos node 0.17+
+* golos node 0.18+
 
 Installation using pipenv
 -------------------------

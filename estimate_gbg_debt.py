@@ -5,8 +5,8 @@ import logging
 import sys
 import yaml
 
-from piston import Steem
-from piston.amount import Amount
+from golos import Steem
+from golos.amount import Amount
 
 import functions
 
@@ -39,8 +39,8 @@ def main():
     with open(args.config, 'r') as ymlfile:
         conf = yaml.load(ymlfile)
 
-    golos = Steem(node=conf['node'], nobroadcast=True)
-    props = golos.info()
+    golos = Steem(nodes=conf['node'], no_broadcast=True)
+    props = golos.get_dynamic_global_properties()
 
     sbd_supply = Amount(props['current_sbd_supply'])
     current_supply = Amount(props['current_supply'])

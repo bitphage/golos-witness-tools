@@ -6,7 +6,7 @@ import sys
 import argparse
 import logging
 import yaml
-from piston import Steem
+from golos import Steem
 
 from functions import *
 
@@ -89,7 +89,7 @@ def main():
         conf = yaml.load(ymlfile)
 
     # initialize steem instance
-    golos = Steem(node=conf['node'], keys=conf['keys'])
+    golos = Steem(nodes=conf['node'], keys=conf['keys'])
 
     # main loop
     while True:

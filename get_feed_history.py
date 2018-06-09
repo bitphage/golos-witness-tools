@@ -7,8 +7,8 @@ import logging
 import yaml
 from datetime import datetime
 from datetime import timedelta
-from piston import Steem
-from piston.amount import Amount
+from golos import Steem
+from golos.amount import Amount
 
 import functions
 
@@ -39,9 +39,9 @@ def main():
     with open(args.config, 'r') as ymlfile:
         conf = yaml.load(ymlfile)
 
-    golos = Steem(node=conf['node'])
+    golos = Steem(nodes=conf['node'])
 
-    hist = golos.rpc.get_feed_history()['price_history']
+    hist = golos.get_feed_history()['price_history']
     hist_size = len(hist)
 
     # median history contains values for STEEMIT_FEED_HISTORY_WINDOW

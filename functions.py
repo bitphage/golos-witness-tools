@@ -7,17 +7,17 @@ from datetime import date
 from datetime import datetime
 from datetime import timedelta
 
-from piston.converter import Converter
-from piston.witness import Witness
+from golos.converter import Converter
+from golos.witness import Witness
 
 log = logging.getLogger(__name__)
 
-def get_median_price(steem_instance):
+def get_median_price(steemd_instance):
     """ get current median GBG/GOLOS price from network
-        :param Steem steem_instance: Steem() instance to use when accesing a RPC
+        :param Steem steemd_instance: Steem() instance to use when accesing a RPC
     """
 
-    cv = Converter(steem_instance)
+    cv = Converter(steemd_instance)
     try:
         price = cv.sbd_median_price()
     except Exception as e:
@@ -230,10 +230,10 @@ def get_price_btc_golos():
         return False
 
 
-def get_witness(steem_instance, witness):
+def get_witness(steemd_instance, witness):
     """ call get_witness_by_account and return Witness object """
 
-    w = Witness(witness, steem_instance)
+    w = Witness(witness, steemd_instance)
     return w
 
 def get_old_price(witness_data):
@@ -267,25 +267,25 @@ def last_price_too_old(witness_data, max_age):
     else:
         return False
 
-def publish_price(steem_instance, price, account=False):
+def publish_price(steemd_instance, price, account=False):
     """ broadcast calculated price to the network """
 
     # we should publish feed in format 0.000
     final_gbg_price = format(price, '.3f')
     log.info('Price to publish: %s' % final_gbg_price)
     try:
-        steem_instance.witness_feed_publish(final_gbg_price, quote='1.000', account=account)
+        steemd_instance.witness_feed_publish(final_gbg_price, quote='1.000', account=account)
     except Exception as e:
         log.error(e)
         return False
 
-def update_witness(steem_instance, signing_key, url, props, account):
+def update_witness(steemd_instance, signing_key, url, props, account):
     """ update witness data in the blockchain
     """
 
     log.debug('args: %s', locals())
     try:
-        steem_instance.witness_update(signing_key, url, props, account=account)
+        steemd_instance.witness_update(signing_key, url, props, account=account)
     except Exception as e:
         log.error(e)
         raise e

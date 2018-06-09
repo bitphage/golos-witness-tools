@@ -5,8 +5,8 @@ import logging
 import yaml
 
 from pprint import pprint
-from piston import Steem
-from piston.witness import Witness
+from golos import Steem
+from golos.witness import Witness
 
 log = logging.getLogger('functions')
 
@@ -44,7 +44,7 @@ def main():
         conf = yaml.load(ymlfile)
 
     # initialize steem instance
-    golos = Steem(node=conf['node'], keys=conf['keys'])
+    golos = Steem(nodes=conf['node'], keys=conf['keys'])
 
     w = Witness(args.witness, golos)
     pprint(w)

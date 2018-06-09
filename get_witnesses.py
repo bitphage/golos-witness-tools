@@ -5,7 +5,7 @@ import json
 import argparse
 import logging
 import yaml
-from piston import Steem
+from golos import Steem
 
 import functions
 
@@ -41,9 +41,9 @@ def main():
     with open(args.config, 'r') as ymlfile:
         conf = yaml.load(ymlfile)
 
-    golos = Steem(node=conf['node'])
+    golos = Steem(nodes=conf['node'])
 
-    witnesses = golos.rpc.get_witnesses_by_vote('', args.count, api='database_api')
+    witnesses = golos.get_witnesses_by_vote('', args.count)
     witness_list = list()
 
     for w in witnesses:

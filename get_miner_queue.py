@@ -5,7 +5,7 @@ import json
 import argparse
 import logging
 import yaml
-from piston import Steem
+from golos import Steem
 from pprint import pprint
 
 import functions
@@ -38,9 +38,9 @@ def main():
     with open(args.config, 'r') as ymlfile:
         conf = yaml.load(ymlfile)
 
-    golos = Steem(node=conf['node'])
+    golos = Steem(nodes=conf['node'])
 
-    q = golos.rpc.get_miner_queue(api='database_api')
+    q = golos.get_miner_queue()
     pprint(q)
 
 if __name__ == '__main__':

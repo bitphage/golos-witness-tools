@@ -8,8 +8,8 @@ import yaml
 
 from datetime import datetime
 from datetime import timedelta
-from piston import Steem
-from piston.amount import Amount
+from golos import Steem
+from golos.amount import Amount
 
 log = logging.getLogger('functions')
 
@@ -129,9 +129,9 @@ def main():
     with open(args.config, 'r') as ymlfile:
         conf = yaml.load(ymlfile)
 
-    golos = Steem(node=conf['node'])
+    golos = Steem(nodes=conf['node'])
 
-    props = golos.info()
+    props = golos.get_dynamic_global_properties()
 
     head_block_num = props['head_block_number']
     virtual_supply = Amount(props['virtual_supply']).amount

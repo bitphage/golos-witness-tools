@@ -12,4 +12,8 @@ url = "https://pypi.python.org/simple"
 [packages]
 
 requests = "*"
-golos-piston = {git = "https://github.com/bitfag/golos-piston.git"}
+golos = {git = "https://github.com/bitfag/golos-python.git", ref = "golos-v0.18"}
+pyaml = "*"
+
+[requires]
+python_version = "3.6"

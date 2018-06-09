@@ -4,8 +4,8 @@ import argparse
 import logging
 import yaml
 
-from piston import Steem
-from piston.witness import Witness
+from golos import Steem
+from golos.witness import Witness
 from datetime import datetime
 from datetime import timedelta
 
@@ -47,7 +47,7 @@ def main():
         conf = yaml.load(ymlfile)
 
     # initialize steem instance
-    golos = Steem(node=conf['node'], keys=conf['keys'])
+    golos = Steem(nodes=conf['node'], keys=conf['keys'])
 
     # set pubkey to special value whether we need to shutdown witness
     if args.shutdown:

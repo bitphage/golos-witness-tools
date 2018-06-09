@@ -1,4 +1,5 @@
-node: ws://localhost:8091
+node: 
+  - ws://localhost:8091
 witness: foo
 keys:
   # your private active key here, used to sign transactions

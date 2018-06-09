@@ -9,7 +9,7 @@ import time
 from datetime import datetime
 from datetime import timedelta
 
-from piston import Steem
+from golos import Steem
 
 import functions
 
@@ -40,11 +40,11 @@ def main():
     with open(args.config, 'r') as ymlfile:
         conf = yaml.load(ymlfile)
 
-    golos = Steem(node=conf['node'], keys=conf['keys'])
+    golos = Steem(nodes=conf['node'], keys=conf['keys'])
 
     # do not begin monitoring until node will not get synced!
     while True:
-        props = golos.info()
+        props = golos.get_dynamic_global_properties()
         chain_time = datetime.strptime(props['time'], '%Y-%m-%dT%H:%M:%S')
         time_diff = datetime.utcnow() - chain_time
         if time_diff.total_seconds() > 6:

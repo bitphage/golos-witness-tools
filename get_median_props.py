@@ -5,7 +5,7 @@ import logging
 import yaml
 
 from pprint import pprint
-from piston import Steem
+from golos import Steem
 
 log = logging.getLogger('functions')
 
@@ -35,9 +35,9 @@ def main():
         conf = yaml.load(ymlfile)
 
     # initialize steem instance
-    golos = Steem(node=conf['node'], keys=conf['keys'])
+    golos = Steem(nodes=conf['node'], keys=conf['keys'])
 
-    median_props = golos.rpc.get_chain_properties(api='database_api')
+    median_props = golos.get_chain_properties()
     pprint(median_props)
 
 
