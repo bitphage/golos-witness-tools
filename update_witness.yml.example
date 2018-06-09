@@ -12,4 +12,3 @@ props:
   account_creation_fee: "1.000 GOLOS"
   maximum_block_size: 65536
   sbd_interest_rate: 1000
-  fee: "1.000 GBG"
