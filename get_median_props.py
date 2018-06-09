@@ -35,7 +35,7 @@ def main():
         conf = yaml.load(ymlfile)
 
     # initialize steem instance
-    golos = Steem(nodes=conf['node'], keys=conf['keys'])
+    golos = Steem(nodes=conf['node'])
 
     median_props = golos.get_chain_properties()
     pprint(median_props)
