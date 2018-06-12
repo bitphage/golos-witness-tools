@@ -43,7 +43,7 @@ docker run -it --rm vvk123/golos-witness-tools:latest ./update_price_feed.py --d
 
 docker-compose:
 
-* copy docker-compose.yml.example to docker-compose.yml
+* copy [docker-compose.yml.example](docker-compose.yml.example) to docker-compose.yml
 * adjust environment variables in docker-compose.yml. Look for all env vars in `docker-entrypoint.sh`
 
 ```
