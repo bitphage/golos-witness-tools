@@ -11,4 +11,9 @@ url: https://golos.io/@foo
 props:
   account_creation_fee: "1.000 GOLOS"
   maximum_block_size: 65536
-  sbd_interest_rate: 1000
+  # 1000 will be 10%
+  sbd_interest_rate: 0
+  create_account_delegation_time: 2592000
+  create_account_min_delegation: "3 GOLOS"
+  create_account_min_golos_fee: "0.05 GOLOS"
+  min_delegation: "3 GOLOS"

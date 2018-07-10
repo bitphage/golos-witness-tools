@@ -286,6 +286,7 @@ def update_witness(steemd_instance, signing_key, url, props, account):
     log.debug('args: %s', locals())
     try:
         steemd_instance.witness_update(signing_key, url, props, account=account)
+        steemd_instance.chain_properties_update(props, account=account)
     except Exception as e:
         log.error(e)
         raise e
