@@ -85,8 +85,9 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
         if head_block_num % STEEMIT_BLOCKS_PER_YEAR == 0:
             i += 1
             new_steem_daily = new_steem * STEEMIT_BLOCKS_PER_DAY
-            print('new_steem daily on block {} ({} years): {:.0f}. Rate: {:.2%}. Supply: {:,.0f}'.format(
-                head_block_num, i, new_steem_daily, current_inflation_rate/STEEMIT_100_PERCENT, virtual_supply))
+            year = head_block_num / STEEMIT_BLOCKS_PER_YEAR
+            print('new_steem daily on block {} ({:.0f} years): {:.0f}. Rate: {:.2%}. Supply: {:,.0f}'.format(
+                head_block_num, year, new_steem_daily, current_inflation_rate/STEEMIT_100_PERCENT, virtual_supply))
 
         head_block_num += 1
 
