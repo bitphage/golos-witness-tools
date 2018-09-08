@@ -48,6 +48,7 @@ def main():
     total_reward_fund_steem = Amount(props['total_reward_fund_steem'])
 
     median = functions.get_median_price(golos)
+    median_estimated = functions.estimate_median_price_from_feed(golos)
 
     # libraries/chain/database.cpp
     # this min_price caps system debt to 10% of GOLOS market capitalisation
@@ -57,7 +58,9 @@ def main():
     # #define STEEMIT_100_PERCENT 10000
     # this is current GBG percent printed
     percent_sbd = sbd_supply.amount / median * 100 / virtual_supply.amount
-    log.info('System GBG debt percent: {:.3f}'.format(percent_sbd))
+    log.info('System GBG debt percent (by blockchain median): {:.3f}'.format(percent_sbd))
+    percent_sbd = sbd_supply.amount / median_estimated * 100 / virtual_supply.amount
+    log.info('System GBG debt percent (by feed price): {:.3f}'.format(percent_sbd))
 
     sbd_print_rate = props['sbd_print_rate']/100
     gbg_emission_week = (total_reward_fund_steem.amount / 2) * median * sbd_print_rate / 100

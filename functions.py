@@ -9,6 +9,7 @@ from datetime import timedelta
 
 from golos.converter import Converter
 from golos.witness import Witness
+from golos.amount import Amount
 
 log = logging.getLogger(__name__)
 
@@ -27,6 +28,18 @@ def get_median_price(steemd_instance):
     log.debug('current median price: %s', price)
     return price
 
+def estimate_median_price_from_feed(steemd_instance):
+    """ Calculate new expected median price based on last median price feed
+        :param Steem steemd_instance: Steem() instance to use when accesing a RPC
+    """
+
+    last_feed = steemd_instance.get_feed_history()['price_history'][-1:]
+
+    base = Amount(last_feed[0]['base'])
+    quote = Amount(last_feed[0]['quote'])
+
+    median = base.amount/quote.amount
+    return median
 
 def get_price_gold_goldpriceorg():
     """ returns gold price in USD from goldprice.org """
