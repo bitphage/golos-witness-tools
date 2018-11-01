@@ -62,6 +62,12 @@ def main():
     percent_sbd = sbd_supply.amount / median_estimated * 100 / virtual_supply.amount
     log.info('System GBG debt percent (by feed price): {:.3f}'.format(percent_sbd))
 
+    # estimate supply when debt will return to 10% at current price
+    if percent_sbd > 10:
+        target_supply = 9 * sbd_supply.amount / median_estimated
+        log.info('Current supply: {:,.3f} GOLOS'.format(current_supply.amount))
+        log.info('Expected supply for reaching 10% debt: {:,.3f} GOLOS'.format(target_supply))
+
     sbd_print_rate = props['sbd_print_rate']/100
     gbg_emission_week = (total_reward_fund_steem.amount / 2) * median * sbd_print_rate / 100
     gbg_emission_day = gbg_emission_week / 7
