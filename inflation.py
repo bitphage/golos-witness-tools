@@ -86,7 +86,7 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
             i += 1
             new_steem_daily = new_steem * STEEMIT_BLOCKS_PER_DAY
             year = head_block_num / STEEMIT_BLOCKS_PER_YEAR
-            print('new_steem daily on block {} ({:.0f} years): {:.0f}. Rate: {:.2%}. Supply: {:,.0f}'.format(
+            print('new_steem daily on block {} ({:.0f} years): {:.0f}. Rate: {:.2%}. Virtual Supply: {:,.0f}'.format(
                 head_block_num, year, new_steem_daily, current_inflation_rate/STEEMIT_100_PERCENT, virtual_supply))
 
         head_block_num += 1
@@ -114,6 +114,8 @@ def main():
             help='enable debug output'),
     parser.add_argument('-c', '--config', default='./common.yml',
             help='specify custom path for config file')
+    parser.add_argument('--virtual-supply', type=float,
+            help='override current virtual_supply')
     args = parser.parse_args()
 
     # create logger
@@ -137,6 +139,10 @@ def main():
     head_block_num = props['head_block_number']
     virtual_supply = Amount(props['virtual_supply']).amount
     log.debug('current virtual_supply: {:,.0f}'.format(virtual_supply))
+
+    if args.virtual_supply:
+        log.debug('override virtual_supply to: {:,.0f}'.format(args.virtual_supply))
+        virtual_supply = args.virtual_supply
 
     # current daily emission
     days = 1
