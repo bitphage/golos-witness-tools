@@ -66,7 +66,17 @@ def main():
     if percent_sbd > 10:
         target_supply = 9 * sbd_supply.amount / median_estimated
         log.info('Current supply: {:,.3f} GOLOS'.format(current_supply.amount))
-        log.info('Expected supply for reaching 10% debt: {:,.3f} GOLOS'.format(target_supply))
+        log.info('Expected supply for reaching 10% debt: {:,.0f} GOLOS'.format(target_supply))
+
+        converted_supply = sbd_supply.amount / median
+        log.info('New GOLOS amount on full convertation by blockchain price: {:,.0f} GOLOS'
+                .format(converted_supply))
+
+        converted_supply = sbd_supply.amount / median_estimated
+        log.info('New GOLOS amount on full convertation by feed price: {:,.0f} GOLOS'
+                 .format(converted_supply))
+        log.info('Total supply after full convertation by feed price: {:,.0f} GOLOS'
+                 .format(current_supply.amount + converted_supply))
 
     sbd_print_rate = props['sbd_print_rate']/100
     gbg_emission_week = (total_reward_fund_steem.amount / 2) * median * sbd_print_rate / 100
