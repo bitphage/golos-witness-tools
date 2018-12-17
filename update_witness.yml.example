@@ -17,3 +17,23 @@ props:
   create_account_min_delegation: "3 GOLOS"
   create_account_min_golos_fee: "0.05 GOLOS"
   min_delegation: "3 GOLOS"
+  allow_distribute_auction_reward: true
+  allow_return_auction_reward_to_fund: true
+  auction_window_size: 0
+  comments_per_window: 10
+  comments_window: 200
+  # 0: bounded, 1: linear, 2: squre_root
+  curation_reward_curve: 1
+  custom_ops_bandwidth_multiplier: 10
+  max_curation_percent: 8000
+  max_delegated_vesting_interest_rate: 8000
+  max_referral_break_fee: "100.000 GOLOS"
+  max_referral_interest_rate: 8000
+  max_referral_term_sec: 15552000
+  min_curation_percent: 8000
+  min_referral_break_fee: "0.001 GOLOS"
+  posts_per_window: 4
+  posts_window: 7200
+  votes_per_window: 5
+  votes_window: 15
+
