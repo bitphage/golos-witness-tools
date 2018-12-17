@@ -12,7 +12,7 @@ url = "https://pypi.python.org/simple"
 [packages]
 
 requests = "*"
-golos = {git = "https://github.com/bitfag/golos-python.git", ref = "golos-v0.18"}
+golos = {git = "https://github.com/bitfag/golos-python.git"}
 pyaml = "*"
 
 [requires]
