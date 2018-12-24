@@ -46,7 +46,7 @@ def main():
     # initialize steem instance
     golos = Steem(nodes=conf['node'], keys=conf['keys'])
 
-    w = Witness(args.witness, golos)
+    w = Witness(args.witness, steemd_instance=golos)
     pprint(w)
 
 
