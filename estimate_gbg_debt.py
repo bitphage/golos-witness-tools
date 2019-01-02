@@ -62,9 +62,10 @@ def main():
     percent_sbd = sbd_supply.amount / median_estimated * 100 / virtual_supply.amount
     log.info('System GBG debt percent (by feed price): {:.3f}'.format(percent_sbd))
 
-    # estimate supply when debt will return to 10% at current price
     if percent_sbd > 10:
+        # estimate supply when debt will return to 10% at current price
         target_supply = 9 * sbd_supply.amount / median_estimated
+        log.info('GBG supply: {:,.3f} GBG'.format(sbd_supply.amount))
         log.info('Current supply: {:,.3f} GOLOS'.format(current_supply.amount))
         log.info('Expected supply for reaching 10% debt: {:,.0f} GOLOS'.format(target_supply))
 
@@ -77,6 +78,20 @@ def main():
                  .format(converted_supply))
         log.info('Total supply after full convertation by feed price: {:,.0f} GOLOS'
                  .format(current_supply.amount + converted_supply))
+
+        # model gradual convertation of all GBG supply
+        step = 10000
+        price = min_price
+        gbg = sbd_supply.amount
+        golos = current_supply.amount
+
+        while gbg > step:
+            gbg -= step
+            golos += step / price
+            price = max(9 * gbg / golos, median_estimated)
+        new_supply = golos - current_supply.amount
+        log.info('New GOLOS amount after gradual convertation with step {}: {:,.0f} GOLOS'
+                 .format(step, new_supply))
 
     sbd_print_rate = props['sbd_print_rate']/100
     gbg_emission_week = (total_reward_fund_steem.amount / 2) * median * sbd_print_rate / 100
