@@ -6,7 +6,7 @@ keys:
   - WIF_PRIVATE_KEY
 
 # specify price source here
-#source: cmc
+# supported sources are: cmc, bitshares
 source: bitshares
 
 # bitshares nodes to use
