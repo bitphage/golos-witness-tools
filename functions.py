@@ -1,5 +1,4 @@
 import logging
-import time
 import requests
 import re
 
@@ -133,17 +132,17 @@ def get_price_usd_btc_exchanges():
     try:
         r = requests.get("https://api.bitfinex.com/v1/pubticker/BTCUSD", timeout=5).json()
         prices['bitfinex'] = {'price': float(r['last_price']), 'volume': float(r['volume'])}
-    except:
+    except:  # noqa: E722
         pass
     try:
         r = requests.get("https://api.exchange.coinbase.com/products/BTC-USD/ticker", timeout=5).json()
         prices['coinbase'] = {'price': float(r['price']), 'volume': float(r['volume'])}
-    except:
+    except:  # noqa: E722
         pass
     try:
         r = requests.get("https://www.bitstamp.net/api/v2/ticker/btcusd/", timeout=5).json()
         prices['bitstamp'] = {'price': float(r['last']), 'volume': float(r['volume'])}
-    except:
+    except:  # noqa: E722
         pass
     if not prices:
         return 0
@@ -284,8 +283,8 @@ def get_old_price(witness_data):
 def last_price_too_old(witness_data, max_age):
     """ Check last price update time and return True or False """
 
-    l = witness_data['last_sbd_exchange_update']
-    last_update = datetime.strptime(l, '%Y-%m-%dT%H:%M:%S')
+    last = witness_data['last_sbd_exchange_update']
+    last_update = datetime.strptime(last, '%Y-%m-%dT%H:%M:%S')
     log.debug('last price update: %s', last_update)
     log.debug('max_age: %s', max_age)
 
