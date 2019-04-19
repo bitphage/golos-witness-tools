@@ -3,6 +3,26 @@ witness: {{ getenv "witness" }}
 keys:
   - {{ getenv "key" }}
 
+# specify price source here
+# supported sources are: cmc, bitshares
+source: {{ getenv "price_source" }}
+
+# bitshares nodes to use
+node_bts: {{ getenv "node_bts" }}
+
+# what markets should be used for price measurements
+markets: {{ getenv "markets" }}
+
+# When several markets used, how to calculate resulting price
+# Supported metrics are:
+# - median: use median price across markets
+# - mean: use simple averaged price
+# - weighted_average: markets with more volume has higher influence
+metric: {{ getenv "metric" }}
+
+# Volume is measured looking into orderbook liquidity. This setting determine how deeply orderbooks should be measured
+depth_pct: {{ getenv "depth_pct" }}
+
 # how often calculate price
 interval: {{ getenv "interval" }}
 
@@ -10,7 +30,7 @@ interval: {{ getenv "interval" }}
 max_age: {{ getenv "max_age" }}
 
 # update price only if difference between old and current price more than threshold
-threshold: {{ getenv "threshold" }}
+threshold_pct: {{ getenv "threshold_pct" }}
 
 # price correction coefficient (default: don't touch automatic price)
 k: {{ getenv "k" }}

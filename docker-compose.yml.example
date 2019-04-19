@@ -18,8 +18,23 @@ services:
       NODE: ws://golos:8091
       WITNESS: foo
       KEY: PRIVATE-ACTIVE-KEY
+      SOURCE: bitshares
+      NODE_BTS: "\n
+        - wss://eu.nodes.bitshares.ws\n
+        - wss://bitshares.openledger.info/ws\n
+        - wss://citadel.li/node\n
+        - wss://api-ru.bts.blckchnd.com\n
+        - wss://api.bts.blckchnd.com"
+      MARKETS: "\n
+        - RUDEX.GOLOS/BTS\n
+        - RUDEX.GOLOS/RUDEX.BTC\n
+        - RUDEX.GOLOS/RUBLE\n
+        - RUDEX.GOLOS/USD\n
+        - RUDEX.GOLOS/CNY"
+      METRIC: weighted_average
       K: 1
-      THRESHOLD: 0.05
+      DEPTH_PCT: 20
+      THRESHOLD_PCT: 15
     image: vvk123/golos-witness-tools
     depends_on:
       - golos
@@ -37,4 +52,3 @@ services:
     command: ./witness_monitor.py
     depends_on:
       - golos
-
