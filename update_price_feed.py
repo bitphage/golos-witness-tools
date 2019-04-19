@@ -121,12 +121,14 @@ def calculate_gbg_golos_price_bts(bitshares, markets, metric='median', depth_pct
         log.critical('unsupported metric')
         sys.exit(1)
 
-    # 1 GOLD is 1 troy ounce; calc xxx BTS for 1 GOLD
-    price_troyounce = bitshares.get_feed_price('GOLD') ** -1
+    # 1 GOLD is 1 troy ounce; calc xxx GOLD for 1 BTS
+    price_troyounce = bitshares.get_feed_price('GOLD')
     gram_in_troyounce = 31.1034768
-    price_bts_gold = price_troyounce / gram_in_troyounce / 1000
+    # How many 1mg gold for 1 BTS
+    price_gold_bts = price_troyounce * gram_in_troyounce * 1000
+    log.debug('Gold price is: {:.8f} 1mgGOLD/BTS'.format(price_gold_bts))
 
-    price_gold_golos = price_bts_golos * price_bts_gold
+    price_gold_golos = price_bts_golos * price_gold_bts
     log.info('Calculated price {:.3f} GBG/GOLOS'.format(price_gold_golos))
 
     return price_gold_golos
