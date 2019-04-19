@@ -15,15 +15,15 @@ import functions
 
 log = logging.getLogger('functions')
 
+
 def main():
 
     parser = argparse.ArgumentParser(
-            description='Monitor missed blocks for specified witness and switch key on misses',
-            epilog='Report bugs to: https://github.com/bitfag/golos-witness-tools/issues')
-    parser.add_argument('-d', '--debug', action='store_true',
-            help='enable debug output'),
-    parser.add_argument('-c', '--config', default='./witness_monitor.yml',
-            help='specify custom path for config file')
+        description='Monitor missed blocks for specified witness and switch key on misses',
+        epilog='Report bugs to: https://github.com/bitfag/golos-witness-tools/issues',
+    )
+    parser.add_argument('-d', '--debug', action='store_true', help='enable debug output'),
+    parser.add_argument('-c', '--config', default='./witness_monitor.yml', help='specify custom path for config file')
     args = parser.parse_args()
 
     # create logger
@@ -74,9 +74,11 @@ def main():
         log.debug('current miss diff: {}'.format(miss_diff))
 
         # too much misses and witness running at another node and previous key is not ours
-        if miss_diff > conf['allowed_misses'] and \
-           w['signing_key'] != conf['witness_pubkey'] and \
-           prev_key != conf['witness_pubkey']:
+        if (
+            miss_diff > conf['allowed_misses']
+            and w['signing_key'] != conf['witness_pubkey']
+            and prev_key != conf['witness_pubkey']
+        ):
 
             # switch witness key to us
             log.info('switching witness key, miss_diff is: {} > {}'.format(miss_diff, conf['allowed_misses']))
@@ -102,6 +104,7 @@ def main():
 
         # try to check miss counter at each round
         time.sleep(63)
+
 
 if __name__ == '__main__':
     main()

@@ -16,12 +16,10 @@ log = logging.getLogger('functions')
 def main():
 
     parser = argparse.ArgumentParser(
-            description='get miner queue',
-            epilog='Report bugs to: https://github.com/bitfag/golos-witness-tools/issues')
-    parser.add_argument('-d', '--debug', action='store_true',
-            help='enable debug output'),
-    parser.add_argument('-c', '--config', default='./common.yml',
-            help='specify custom path for config file')
+        description='get miner queue', epilog='Report bugs to: https://github.com/bitfag/golos-witness-tools/issues'
+    )
+    parser.add_argument('-d', '--debug', action='store_true', help='enable debug output'),
+    parser.add_argument('-c', '--config', default='./common.yml', help='specify custom path for config file')
     args = parser.parse_args()
 
     # create logger
@@ -42,6 +40,7 @@ def main():
 
     q = golos.get_miner_queue()
     pprint(q)
+
 
 if __name__ == '__main__':
     main()

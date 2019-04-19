@@ -15,14 +15,12 @@ log = logging.getLogger('functions')
 def main():
 
     parser = argparse.ArgumentParser(
-            description='get voting props for curation percents',
-            epilog='Report bugs to: https://github.com/bitfag/golos-witness-tools/issues')
-    parser.add_argument('-d', '--debug', action='store_true',
-            help='enable debug output'),
-    parser.add_argument('-c', '--config', default='./common.yml',
-            help='specify custom path for config file')
-    parser.add_argument('-C', '--count', default=19,
-            help='number of witnesses to get')
+        description='get voting props for curation percents',
+        epilog='Report bugs to: https://github.com/bitfag/golos-witness-tools/issues',
+    )
+    parser.add_argument('-d', '--debug', action='store_true', help='enable debug output'),
+    parser.add_argument('-c', '--config', default='./common.yml', help='specify custom path for config file')
+    parser.add_argument('-C', '--count', default=19, help='number of witnesses to get')
     args = parser.parse_args()
 
     # create logger
@@ -46,16 +44,17 @@ def main():
 
     for w in witnesses:
         element = {
-                    'name': w['owner'],
-                    'min': w['props']['min_curation_percent'],
-                    'max': w['props']['max_curation_percent'],
-                  }
+            'name': w['owner'],
+            'min': w['props']['min_curation_percent'],
+            'max': w['props']['max_curation_percent'],
+        }
         voting.append(element)
 
     voting = sorted(voting, key=lambda k: k['min'])
 
     for el in voting:
         print('{:<16} {} {}'.format(el['name'], el['min'], el['max']))
+
 
 if __name__ == '__main__':
     main()

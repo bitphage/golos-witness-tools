@@ -9,15 +9,15 @@ from golos import Steem
 
 log = logging.getLogger('functions')
 
+
 def main():
 
     parser = argparse.ArgumentParser(
-            description='get current median properties',
-            epilog='Report bugs to https://github.com/bitfag/golos-witness-tools/issues')
-    parser.add_argument('-c', '--config', default='./common.yml',
-            help='specify custom path for config file')
-    parser.add_argument('-d', '--debug', action='store_true',
-            help='enable debug output'),
+        description='get current median properties',
+        epilog='Report bugs to https://github.com/bitfag/golos-witness-tools/issues',
+    )
+    parser.add_argument('-c', '--config', default='./common.yml', help='specify custom path for config file')
+    parser.add_argument('-d', '--debug', action='store_true', help='enable debug output'),
     args = parser.parse_args()
 
     # create logger

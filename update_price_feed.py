@@ -32,11 +32,11 @@ def calculate_gbg_golos_price():
     log.info('BTC/GBG: {:.8f}'.format(price_btc_gbg))
 
     # calculated price BTC/gold just for analytics
-    price_btc_gold = price_mg_gold/usd_btc
+    price_btc_gold = price_mg_gold / usd_btc
     log.info('BTC/gold: {:.8f}'.format(price_btc_gold))
 
     # BTC/GBG / BTC/gold rate just for analytics
-    gbg_gold_rate = price_btc_gbg/price_btc_gold
+    gbg_gold_rate = price_btc_gbg / price_btc_gold
     log.info('GBG/gold rate: {:.2f}'.format(gbg_gold_rate))
 
     # calculated price USD/golos just for analytics
@@ -49,27 +49,32 @@ def calculate_gbg_golos_price():
 
     return price_gold_golos
 
+
 def main():
 
     parser = argparse.ArgumentParser(
-            description='golos price feed updater',
-            epilog='Report bugs to https://github.com/bitfag/golos-witness-tools/issues')
-    parser.add_argument('-c', '--config', default='./update_price_feed.yml',
-            help='specify custom path for config file')
-    parser.add_argument('-m', '--monitor', action='store_true',
-            help='run in continuous mode and update price periodically')
+        description='golos price feed updater',
+        epilog='Report bugs to https://github.com/bitfag/golos-witness-tools/issues',
+    )
+    parser.add_argument('-c', '--config', default='./update_price_feed.yml', help='specify custom path for config file')
+    parser.add_argument(
+        '-m', '--monitor', action='store_true', help='run in continuous mode and update price periodically'
+    )
 
     publish_args = parser.add_mutually_exclusive_group()
-    publish_args.add_argument('-n', '--dry-run', action='store_true',
-            help='calculate prices but do not send transaction to golos network')
-    publish_args.add_argument('-f', '--force', action='store_true',
-            help='force update price feed')
+    publish_args.add_argument(
+        '-n', '--dry-run', action='store_true', help='calculate prices but do not send transaction to golos network'
+    )
+    publish_args.add_argument('-f', '--force', action='store_true', help='force update price feed')
 
     verbosity_args = parser.add_mutually_exclusive_group()
-    verbosity_args.add_argument('-q', '--quiet', action='store_true',
-        help='do not show any output except errors, just silently update price feed'),
-    verbosity_args.add_argument('-d', '--debug', action='store_true',
-        help='enable debug output'),
+    verbosity_args.add_argument(
+        '-q',
+        '--quiet',
+        action='store_true',
+        help='do not show any output except errors, just silently update price feed',
+    ),
+    verbosity_args.add_argument('-d', '--debug', action='store_true', help='enable debug output'),
     args = parser.parse_args()
 
     # create logger
@@ -141,6 +146,7 @@ def main():
                 time.sleep(conf['interval'])
             else:
                 sys.exit(0)
+
 
 if __name__ == '__main__':
     main()

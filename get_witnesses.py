@@ -15,16 +15,13 @@ log = logging.getLogger('functions')
 def main():
 
     parser = argparse.ArgumentParser(
-            description='get list of witnesses',
-            epilog='Report bugs to: https://github.com/bitfag/golos-witness-tools/issues')
-    parser.add_argument('-d', '--debug', action='store_true',
-            help='enable debug output'),
-    parser.add_argument('-c', '--config', default='./common.yml',
-            help='specify custom path for config file')
-    parser.add_argument('-C', '--count', default=19,
-            help='number of witnesses to get')
-    parser.add_argument('-o', '--oneline', action='store_true',
-            help='print witnesses in one line')
+        description='get list of witnesses',
+        epilog='Report bugs to: https://github.com/bitfag/golos-witness-tools/issues',
+    )
+    parser.add_argument('-d', '--debug', action='store_true', help='enable debug output'),
+    parser.add_argument('-c', '--config', default='./common.yml', help='specify custom path for config file')
+    parser.add_argument('-C', '--count', default=19, help='number of witnesses to get')
+    parser.add_argument('-o', '--oneline', action='store_true', help='print witnesses in one line')
     args = parser.parse_args()
 
     # create logger
@@ -53,6 +50,7 @@ def main():
         print(' '.join(witness_list))
     else:
         print('\n'.join(witness_list))
+
 
 if __name__ == '__main__':
     main()

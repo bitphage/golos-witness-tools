@@ -13,6 +13,7 @@ from golos.amount import Amount
 
 log = logging.getLogger(__name__)
 
+
 def get_median_price(steemd_instance):
     """ get current median GBG/GOLOS price from network
         :param Steem steemd_instance: Steem() instance to use when accesing a RPC
@@ -28,6 +29,7 @@ def get_median_price(steemd_instance):
     log.debug('current median price: %s', price)
     return price
 
+
 def estimate_median_price_from_feed(steemd_instance):
     """ Calculate new expected median price based on last median price feed
         :param Steem steemd_instance: Steem() instance to use when accesing a RPC
@@ -38,13 +40,14 @@ def estimate_median_price_from_feed(steemd_instance):
     base = Amount(last_feed[0]['base'])
     quote = Amount(last_feed[0]['quote'])
 
-    median = base.amount/quote.amount
+    median = base.amount / quote.amount
     return median
+
 
 def get_price_gold_goldpriceorg():
     """ returns gold price in USD from goldprice.org """
 
-    price_troyounce = 0;
+    price_troyounce = 0
     try:
         r = requests.get("http://data-asg.goldprice.org/GetData/USD-XAU/1", timeout=5).json()
         price_troyounce = float(r[0].split(',')[1])
@@ -54,6 +57,7 @@ def get_price_gold_goldpriceorg():
     gram_in_troyounce = 31.1034768
     price_mg = price_troyounce / gram_in_troyounce / 1000
     return price_mg
+
 
 def get_price_gold_cbr():
     """ get gold price from Russian Central Bank; return value is RUB """
@@ -78,7 +82,8 @@ def get_price_gold_cbr():
             price.append(element.getElementsByTagName('Buy')[0].childNodes[0].data.split(',')[0])
 
     # return value is grams, so divide to 1000
-    return(float(price[0])/1000)
+    return float(price[0]) / 1000
+
 
 def get_rub_usd_price():
     """ get RUB/USD price from Russian Central Bank API mirror """
@@ -89,7 +94,8 @@ def get_rub_usd_price():
         log.error(e)
         return False
 
-    return(r.json()['Valute']['USD']['Value'])
+    return r.json()['Valute']['USD']['Value']
+
 
 def get_price_gold_cbr_in_usd():
     """ calculate gold price in USD based on cbr.ru rates """
@@ -97,10 +103,11 @@ def get_price_gold_cbr_in_usd():
     rub_gold_price = get_price_gold_cbr()
     rub_usd_price = get_rub_usd_price()
     if rub_usd_price:
-        usd_gold_price = rub_gold_price/rub_usd_price
+        usd_gold_price = rub_gold_price / rub_usd_price
         return usd_gold_price
     else:
         return False
+
 
 def get_price_gold():
     """ Wrapper function. Try goldprice.org, if failed try Russian Central Bank """
@@ -116,6 +123,7 @@ def get_price_gold():
     else:
         log.critical('failed to obtain USD/gold price from any source')
         return False
+
 
 def get_price_usd_btc_exchanges():
     """ returns average BTC/USD price across some exchanges"""
@@ -137,7 +145,7 @@ def get_price_usd_btc_exchanges():
     except:
         pass
     if not prices:
-       return 0
+        return 0
     total_usd = 0
     total_btc = 0
     for p in prices.values():
@@ -145,6 +153,7 @@ def get_price_usd_btc_exchanges():
         total_btc += p['volume']
     avg_price = total_usd / total_btc
     return avg_price
+
 
 def get_price_bittrex(cur1, cur2):
     """ Calculate cur1 to cur2 price based on bittrex trade history """
@@ -163,8 +172,9 @@ def get_price_bittrex(cur1, cur2):
         log.error("Error in fetching Bittrex market history")
         return False
 
-    price = cur2_quantity/cur1_quantity
+    price = cur2_quantity / cur1_quantity
     return price
+
 
 def get_price_usd_btc_coinmarketcap():
     """ returns USD/BTC price from coinmarketcap.org """
@@ -177,6 +187,7 @@ def get_price_usd_btc_coinmarketcap():
     price = r.json()[0]['price_usd']
     return price
 
+
 def get_price_btc_golos_coinmarketcap():
     """ returns BTC/GOLOS price from coinmarketcap.org """
 
@@ -188,6 +199,7 @@ def get_price_btc_golos_coinmarketcap():
     price = r.json()[0]['price_btc']
     return price
 
+
 def get_price_btc_gbg_coinmarketcap():
     """ returns BTC/GBG price from coinmarketcap.org """
 
@@ -198,6 +210,7 @@ def get_price_btc_gbg_coinmarketcap():
         return False
     price = r.json()[0]['price_btc']
     return float(price)
+
 
 def get_price_usd_btc():
     """ wrapper function to obtain USD/BTC price """
@@ -214,6 +227,7 @@ def get_price_usd_btc():
         log.error('failed to obtain USD/BTC price from any source')
         return False
 
+
 def get_price_btc_gbg():
     """ wrapper function to obtain BTC/GBG price """
 
@@ -226,6 +240,7 @@ def get_price_btc_gbg():
         return float(price)
     else:
         log.critical('failed to obtain BTC/GBG price from any source')
+
 
 def get_price_btc_golos():
     """ wrapper function to obtain BTC/GOLOS price """
@@ -249,6 +264,7 @@ def get_witness(steemd_instance, witness):
     w = Witness(witness, steemd_instance)
     return w
 
+
 def get_old_price(witness_data):
     """ obtain current published price for witness """
 
@@ -259,9 +275,10 @@ def get_old_price(witness_data):
     if quote == 0:
         return 0
     else:
-        price = base/quote
+        price = base / quote
         log.info('Old price: %s', price)
         return price
+
 
 def last_price_too_old(witness_data, max_age):
     """ Check last price update time and return True or False """
@@ -280,6 +297,7 @@ def last_price_too_old(witness_data, max_age):
     else:
         return False
 
+
 def publish_price(steemd_instance, price, account=False):
     """ broadcast calculated price to the network """
 
@@ -292,6 +310,7 @@ def publish_price(steemd_instance, price, account=False):
         log.error(e)
         return False
 
+
 def update_witness(steemd_instance, signing_key, url, props, account):
     """ update witness data in the blockchain
     """
@@ -303,4 +322,3 @@ def update_witness(steemd_instance, signing_key, url, props, account):
     except Exception as e:
         log.error(e)
         raise e
-

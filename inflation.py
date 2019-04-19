@@ -17,16 +17,17 @@ STEEMIT_INFLATION_RATE_START_PERCENT = 1515
 STEEMIT_INFLATION_RATE_STOP_PERCENT = 95
 STEEMIT_INFLATION_NARROWING_PERIOD = 250000
 STEEMIT_BLOCK_INTERVAL = 3
-STEEMIT_BLOCKS_PER_YEAR = 365*24*60*60/STEEMIT_BLOCK_INTERVAL
-STEEMIT_BLOCKS_PER_DAY = 24*60*60/STEEMIT_BLOCK_INTERVAL
+STEEMIT_BLOCKS_PER_YEAR = 365 * 24 * 60 * 60 / STEEMIT_BLOCK_INTERVAL
+STEEMIT_BLOCKS_PER_DAY = 24 * 60 * 60 / STEEMIT_BLOCK_INTERVAL
 STEEMIT_100_PERCENT = 10000
-STEEMIT_1_PERCENT = STEEMIT_100_PERCENT/100
-STEEMIT_CONTENT_REWARD_PERCENT = 66.67*STEEMIT_1_PERCENT
-STEEMIT_VESTING_FUND_PERCENT = 26.67*STEEMIT_1_PERCENT
+STEEMIT_1_PERCENT = STEEMIT_100_PERCENT / 100
+STEEMIT_CONTENT_REWARD_PERCENT = 66.67 * STEEMIT_1_PERCENT
+STEEMIT_VESTING_FUND_PERCENT = 26.67 * STEEMIT_1_PERCENT
 STEEMIT_MAX_WITNESSES = 21
 timeshare_weight = 5
 top19_weight = 1
 witness_pay_normalization_factor = 25
+
 
 def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witness_reward=False):
     """ Calculate inflation in ranges from start block to stop block
@@ -65,12 +66,12 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
             if head_block_num % 21 == 0:
                 witness_reward = witness_reward * timeshare_weight
                 witness_reward = witness_reward / witness_pay_normalization_factor
-                #log.debug('per block timeshare reward: {:.3f}'.format(witness_reward))
+                # log.debug('per block timeshare reward: {:.3f}'.format(witness_reward))
                 timeshare_reward_per_period += witness_reward
             else:
                 witness_reward = witness_reward * top19_weight
                 witness_reward = witness_reward / witness_pay_normalization_factor
-                #log.debug('per block top19 reward: {:.3f}'.format(witness_reward))
+                # log.debug('per block top19 reward: {:.3f}'.format(witness_reward))
                 top19_reward_per_period += witness_reward
 
             new_steem = content_reward + vesting_reward + witness_reward
@@ -80,19 +81,22 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
             witness_reward_per_period += witness_reward
 
         virtual_supply += new_steem
-        #log.debug('per block: {}'.format(new_steem))
+        # log.debug('per block: {}'.format(new_steem))
 
         if head_block_num % STEEMIT_BLOCKS_PER_YEAR == 0:
             i += 1
             new_steem_daily = new_steem * STEEMIT_BLOCKS_PER_DAY
             year = head_block_num / STEEMIT_BLOCKS_PER_YEAR
-            print('new_steem daily on block {} ({:.0f} years): {:.0f}. Rate: {:.2%}. Virtual Supply: {:,.0f}'.format(
-                head_block_num, year, new_steem_daily, current_inflation_rate/STEEMIT_100_PERCENT, virtual_supply))
+            print(
+                'new_steem daily on block {} ({:.0f} years): {:.0f}. Rate: {:.2%}. Virtual Supply: {:,.0f}'.format(
+                    head_block_num, year, new_steem_daily, current_inflation_rate / STEEMIT_100_PERCENT, virtual_supply
+                )
+            )
 
         head_block_num += 1
 
-    log.debug('last inflation_rate_adjustment: {:.2%}'.format(inflation_rate_adjustment/STEEMIT_100_PERCENT))
-    log.debug('last current_inflation_rate: {:.2%}'.format(current_inflation_rate/STEEMIT_100_PERCENT))
+    log.debug('last inflation_rate_adjustment: {:.2%}'.format(inflation_rate_adjustment / STEEMIT_100_PERCENT))
+    log.debug('last current_inflation_rate: {:.2%}'.format(current_inflation_rate / STEEMIT_100_PERCENT))
 
     if precise_witness_reward:
         log.info('content_reward_per_period: {:.0f}'.format(content_reward_per_period))
@@ -105,17 +109,16 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
 
         return sum
 
+
 def main():
 
     parser = argparse.ArgumentParser(
-            description='calculate inflation rate',
-            epilog='Report bugs to: https://github.com/bitfag/golos-witness-tools/issues')
-    parser.add_argument('-d', '--debug', action='store_true',
-            help='enable debug output'),
-    parser.add_argument('-c', '--config', default='./common.yml',
-            help='specify custom path for config file')
-    parser.add_argument('--virtual-supply', type=float,
-            help='override current virtual_supply')
+        description='calculate inflation rate',
+        epilog='Report bugs to: https://github.com/bitfag/golos-witness-tools/issues',
+    )
+    parser.add_argument('-d', '--debug', action='store_true', help='enable debug output'),
+    parser.add_argument('-c', '--config', default='./common.yml', help='specify custom path for config file')
+    parser.add_argument('--virtual-supply', type=float, help='override current virtual_supply')
     args = parser.parse_args()
 
     # create logger
@@ -151,11 +154,12 @@ def main():
     calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witness_reward=True)
 
     # long-term emission
-    days = 50*364
+    days = 50 * 364
     delta = timedelta(days=days)
     # calculate block_num after X years
     stop_block_num = head_block_num + delta.total_seconds() / STEEMIT_BLOCK_INTERVAL
     calc_inflation(head_block_num, stop_block_num, virtual_supply)
+
 
 if __name__ == '__main__':
     main()
