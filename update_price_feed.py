@@ -7,10 +7,24 @@ import argparse
 import logging
 import yaml
 import statistics
-from golos import Steem
+import time
 
-from functions import *
+from golos import Steem
 from bitshares_helper import BitSharesHelper
+
+from functions import (
+    get_price_gold,
+    get_price_usd_btc,
+    get_price_btc_golos,
+    get_price_btc_gbg,
+    split_pair,
+    calc_weighted_average_price,
+    get_witness,
+    get_old_price,
+    get_median_price,
+    last_price_too_old,
+    publish_price,
+)
 
 log = logging.getLogger('functions')
 
@@ -146,9 +160,9 @@ def main():
     args = parser.parse_args()
 
     # create logger
-    if args.quiet == True:
+    if args.quiet:
         log.setLevel(logging.ERROR)
-    elif args.debug == True:
+    elif args.debug:
         log.setLevel(logging.DEBUG)
     else:
         log.setLevel(logging.INFO)
@@ -211,8 +225,8 @@ def main():
                 log.debug('price difference is too low, not publishing price')
 
             # finally publish price if needed
-            if need_publish == True or args.force == True:
-                if args.dry_run and args.force == False:
+            if need_publish or args.force:
+                if args.dry_run:
                     log.info('--dry-run mode, not publishing price feed')
                 else:
                     publish_price(golos, price, account=conf['witness'])
