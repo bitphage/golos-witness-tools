@@ -6,14 +6,18 @@ import sys
 import argparse
 import logging
 import yaml
+import statistics
 from golos import Steem
 
 from functions import *
+from bitshares_helper import BitSharesHelper
 
 log = logging.getLogger('functions')
 
 
-def calculate_gbg_golos_price():
+def calculate_gbg_golos_price_cmc():
+    """ Old method to calculate price using coinmarketcap
+    """
 
     # market price USD/gold
     price_mg_gold = get_price_gold()
@@ -46,6 +50,70 @@ def calculate_gbg_golos_price():
     # how many mgs of gold in 1 GOLOS == GOLOS/GBG (1 GBG == 1 mg gold)
     price_gold_golos = price_usd_golos / price_mg_gold
     log.info('GBG/GOLOS: {:.3f}'.format(price_gold_golos))
+
+    return price_gold_golos
+
+
+def calculate_gbg_golos_price_bts(bitshares, markets, metric='median', depth_pct=20):
+    """ Calculate price GBG/GOLOS
+
+        :param BitSharesHelper bitshares:
+        :param list markets: list of markets to use to obtain price, in format ['QUOTE/BASE']
+        :param str metric: what metric to use to calculate price
+        :param float depth_pct: how deeply measure market for volume
+        :return: price
+        :rtype: float
+    """
+
+    prices = []
+    price_bts_golos = 0
+
+    assert markets is not None
+
+    for market in markets:
+        quote, base = split_pair(market)
+        # Price and volume on GOLOS/XXX market
+        price1, volume1 = bitshares.get_market_center_price(market, depth_pct=20)
+        log.info('Raw price {:.8f} {}/{}'.format(price1, base, quote))
+
+        # Price and volume on XXX/BTS market
+        if base != 'BTS':
+            tmp_market = '{}/BTS'.format(base)
+            price2, volume2 = bitshares.get_market_center_price(tmp_market, depth_pct=20)
+            price = price1 * price2
+            # Limit volume by smallest volume across steps
+            volume = min(volume1, volume2 / price1)
+        else:
+            price, volume = price1, volume1
+
+        log.debug('Derived price BTS/GOLOS from market {}: {:.8f}, volume: {:.0f}'.format(market, price, volume))
+        prices.append({'price': price, 'volume': volume, 'market': market})
+
+    price_list = [v for element in prices for k, v in element.items() if k == 'price']
+    price_bts_golos_median = statistics.median(price_list)
+    log.debug('Median market price: {:.8f} BTS/GOLOS'.format(price_bts_golos_median))
+    price_bts_golos_mean = statistics.mean(price_list)
+    log.debug('Mean market price: {:.8f} BTS/GOLOS'.format(price_bts_golos_mean))
+    price_bts_golos_wa = calc_weighted_average_price(prices)
+    log.debug('Weighted average market price: {:.8f} BTS/GOLOS'.format(price_bts_golos_wa))
+
+    if metric == 'median':
+        price_bts_golos = price_bts_golos_median
+    elif metric == 'mean':
+        price_bts_golos = price_bts_golos_mean
+    elif metric == 'weighted_average':
+        price_bts_golos = price_bts_golos_wa
+    else:
+        log.critical('unsupported metric')
+        sys.exit(1)
+
+    # 1 GOLD is 1 troy ounce; calc xxx BTS for 1 GOLD
+    price_troyounce = bitshares.get_feed_price('GOLD') ** -1
+    gram_in_troyounce = 31.1034768
+    price_bts_gold = price_troyounce / gram_in_troyounce / 1000
+
+    price_gold_golos = price_bts_golos * price_bts_gold
+    log.debug('Calculated price {:.3f} GBG/GOLOS'.format(price_gold_golos))
 
     return price_gold_golos
 
@@ -93,8 +161,16 @@ def main():
     with open(args.config, 'r') as ymlfile:
         conf = yaml.load(ymlfile)
 
+    # defaults
+    price_source = conf.get('source', 'bitshares')
+    metric = conf.get('metric', 'median')
+    depth_pct = conf.get('depth_pct', 20)
+
     # initialize steem instance
     golos = Steem(nodes=conf['node'], keys=conf['keys'])
+
+    if price_source == 'bitshares':
+        bitshares = BitSharesHelper(node=conf['node_bts'])
 
     # main loop
     while True:
@@ -106,7 +182,11 @@ def main():
             witness_data = get_witness(golos, conf['witness'])
 
             # calculate prices
-            price = calculate_gbg_golos_price()
+            if price_source == 'bitshares':
+                price = calculate_gbg_golos_price_bts(bitshares, conf['markets'], metric=metric, depth_pct=depth_pct)
+            elif price_source == 'cmc':
+                price = calculate_gbg_golos_price_cmc()
+
             old_price = get_old_price(witness_data)
             median_price = get_median_price(golos)
             log.info('Current median price: {:.3f}'.format(median_price))
@@ -137,8 +217,8 @@ def main():
                 else:
                     publish_price(golos, price, account=conf['witness'])
 
-        except Exception as e:
-            log.error('exception in main loop: %s', e)
+        except Exception:
+            log.exception('exception in main loop:')
 
         finally:
 

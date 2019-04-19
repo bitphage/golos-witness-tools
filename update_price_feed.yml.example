@@ -1,9 +1,39 @@
 #node: 'wss://api.golos.cf'
-node: 
+node:
   - ws://localhost:8091
 witness: foo
 keys:
   - WIF_PRIVATE_KEY
+
+# specify price source here
+#source: cmc
+source: bitshares
+
+# bitshares nodes to use
+node_bts:
+  - wss://eu.nodes.bitshares.ws
+  - wss://bitshares.openledger.info/ws
+  - wss://citadel.li/node
+  - wss://api-ru.bts.blckchnd.com
+  - wss://api.bts.blckchnd.com
+
+# what markets should be used for price measurements
+markets:
+  - RUDEX.GOLOS/BTS
+  - RUDEX.GOLOS/RUDEX.BTC
+  - RUDEX.GOLOS/RUBLE
+  - RUDEX.GOLOS/USD
+  - RUDEX.GOLOS/CNY
+
+# When several markets used, how to calculate resulting price
+# Supported metrics are:
+# - median: use median price across markets
+# - mean: use simple averaged price
+# - weighted_average: markets with more volume has higher influence
+metric: weighted_average
+
+# Volume is measured looking into orderbook liquidity. This setting determine how deeply orderbooks should be measured
+depth_pct: 20
 
 # how often calculate price
 interval: 3600

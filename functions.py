@@ -1,6 +1,7 @@
 import logging
 import time
 import requests
+import re
 
 from xml.dom.minidom import parseString
 from datetime import date
@@ -322,3 +323,31 @@ def update_witness(steemd_instance, signing_key, url, props, account):
     except Exception as e:
         log.error(e)
         raise e
+
+
+def split_pair(market):
+    """ Split market pair into QUOTE, BASE symbols
+
+        :param str market: market pair in format 'QUOTE/BASE'. Supported separators are: "/", ":", "-".
+        :return: list with QUOTE and BASE as separate symbols
+        :rtype: list
+    """
+    return re.split('/|:|-', market.upper())
+
+
+def calc_weighted_average_price(prices):
+    """ Calculate weighted average price using "volume" key
+
+        :param list prices: list of dicts [{'price': price, 'volume': volume, 'market': market}]
+    """
+    sum_volume = float()
+    weighted_average_price = float()
+
+    for element in prices:
+        sum_volume += element['volume']
+
+    for element in prices:
+        weight = element['price'] * element['volume'] / sum_volume
+        weighted_average_price += weight
+
+    return weighted_average_price
