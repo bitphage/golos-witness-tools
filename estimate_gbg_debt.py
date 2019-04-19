@@ -35,7 +35,7 @@ def main():
 
     # parse config
     with open(args.config, 'r') as ymlfile:
-        conf = yaml.load(ymlfile)
+        conf = yaml.safe_load(ymlfile)
 
     golos = Steem(nodes=conf['node'], no_broadcast=True)
     props = golos.get_dynamic_global_properties()

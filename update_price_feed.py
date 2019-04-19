@@ -173,7 +173,7 @@ def main():
 
     # parse config
     with open(args.config, 'r') as ymlfile:
-        conf = yaml.load(ymlfile)
+        conf = yaml.safe_load(ymlfile)
 
     # defaults
     price_source = conf.get('source', 'bitshares')
