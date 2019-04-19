@@ -41,8 +41,8 @@ interval: 3600
 # force update price if previous price expired
 max_age: 86400
 
-# update price only if difference between old and current price more than threshold
-threshold: 0.05
+# update price only if difference between old and current price more than threshold, percentage
+threshold_pct: 10
 
 # price correction coefficient (default: don't touch automatic price)
 k: 1

@@ -179,6 +179,7 @@ def main():
     price_source = conf.get('source', 'bitshares')
     metric = conf.get('metric', 'median')
     depth_pct = conf.get('depth_pct', 20)
+    threshold_pct = conf.get('threshold_pct', 10) / 100
 
     # initialize steem instance
     golos = Steem(nodes=conf['node'], keys=conf['keys'])
@@ -217,9 +218,9 @@ def main():
                 need_publish = True
 
             # check for price difference between our old price and new price
-            diff = abs(old_price - price)
-            if diff > conf['threshold']:
-                log.info('publishing price, difference is: {:.3f}'.format(diff))
+            diff_rel = abs((old_price / price) - 1)
+            if diff_rel > threshold_pct:
+                log.info('publishing price, difference is: {:.2%}'.format(diff_rel))
                 need_publish = True
             else:
                 log.debug('price difference is too low, not publishing price')
