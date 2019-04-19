@@ -105,11 +105,11 @@ def calculate_gbg_golos_price_bts(bitshares, markets, metric='median', depth_pct
 
     price_list = [v for element in prices for k, v in element.items() if k == 'price']
     price_bts_golos_median = statistics.median(price_list)
-    log.debug('Median market price: {:.8f} BTS/GOLOS'.format(price_bts_golos_median))
+    log.info('Median market price: {:.8f} BTS/GOLOS'.format(price_bts_golos_median))
     price_bts_golos_mean = statistics.mean(price_list)
-    log.debug('Mean market price: {:.8f} BTS/GOLOS'.format(price_bts_golos_mean))
+    log.info('Mean market price: {:.8f} BTS/GOLOS'.format(price_bts_golos_mean))
     price_bts_golos_wa = calc_weighted_average_price(prices)
-    log.debug('Weighted average market price: {:.8f} BTS/GOLOS'.format(price_bts_golos_wa))
+    log.info('Weighted average market price: {:.8f} BTS/GOLOS'.format(price_bts_golos_wa))
 
     if metric == 'median':
         price_bts_golos = price_bts_golos_median
@@ -127,7 +127,7 @@ def calculate_gbg_golos_price_bts(bitshares, markets, metric='median', depth_pct
     price_bts_gold = price_troyounce / gram_in_troyounce / 1000
 
     price_gold_golos = price_bts_golos * price_bts_gold
-    log.debug('Calculated price {:.3f} GBG/GOLOS'.format(price_gold_golos))
+    log.info('Calculated price {:.3f} GBG/GOLOS'.format(price_gold_golos))
 
     return price_gold_golos
 
