@@ -83,11 +83,17 @@ def main():
         price = min_price
         gbg = sbd_supply.amount
         golos = current_supply.amount
+        flag = False
 
         while gbg > step:
             gbg -= step
             golos += step / price
             price = max(9 * gbg / golos, median_estimated)
+            virtual_supply = golos + gbg / price
+            percent_sbd = gbg / median_estimated * 100 / virtual_supply
+            if percent_sbd < 5 and not flag:
+                log.info('GBG supply at 5% debt: {:,.0f}'.format(gbg))
+                flag = True
         new_supply = golos - current_supply.amount
         log.info('New GOLOS amount after gradual convertation with step {}: {:,.0f} GOLOS'.format(step, new_supply))
 
