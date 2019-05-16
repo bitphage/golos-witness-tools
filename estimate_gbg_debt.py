@@ -2,7 +2,6 @@
 
 import argparse
 import logging
-import sys
 import yaml
 
 from golos import Steem
@@ -24,7 +23,7 @@ def main():
     parser.add_argument('--usd', action='store_true', help='display debt points in USD')
     args = parser.parse_args()
 
-    if args.debug == True:
+    if args.debug:
         log.setLevel(logging.DEBUG)
     else:
         log.setLevel(logging.INFO)
