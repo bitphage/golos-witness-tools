@@ -1,2 +1,7 @@
-node: 
+node:
   - ws://localhost:8090
+
+node_bts:
+  - wss://eu.nodes.bitshares.ws
+  - wss://bitshares.openledger.info/ws
+  - wss://citadel.li/node

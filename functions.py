@@ -192,11 +192,25 @@ def get_price_btc_golos_coinmarketcap():
     """ returns BTC/GOLOS price from coinmarketcap.org """
 
     try:
-        r = requests.get('https://api.coinmarketcap.com/v1/ticker/golos/', timeout=5)
+        r = requests.get('https://api.coinmarketcap.com/v1/ticker/gls/', timeout=5)
     except Exception as e:
         log.error(e)
         return False
     price = r.json()[0]['price_btc']
+    return price
+
+
+def get_price_btc_golos_rudexbtc(bitshares):
+    """ Use price from RUDEX.GOLOS/RUDEX.BTC
+    """
+    price, volume = bitshares.get_market_center_price('RUDEX.GOLOS/RUDEX.BTC', depth_pct=20)
+    return price
+
+
+def get_price_btc_gbg_rudexbtc(bitshares):
+    """ Use price from RUDEX.GBG/RUDEX.BTC
+    """
+    price, volume = bitshares.get_market_center_price('RUDEX.GBG/RUDEX.BTC', depth_pct=20)
     return price
 
 

@@ -8,6 +8,7 @@ from golos import Steem
 from golos.amount import Amount
 
 import functions
+from bitshares_helper import BitSharesHelper
 
 log = logging.getLogger('functions')
 
@@ -35,6 +36,8 @@ def main():
     # parse config
     with open(args.config, 'r') as ymlfile:
         conf = yaml.safe_load(ymlfile)
+
+    bitshares = BitSharesHelper(node=conf['node_bts'])
 
     golos = Steem(nodes=conf['node'], no_broadcast=True)
     props = golos.get_dynamic_global_properties()
@@ -115,9 +118,9 @@ def main():
     # BTC/GOLD
     price_btc_gold = price_mg_gold / usd_btc
     # BTC/GOLOS
-    price_btc_golos = functions.get_price_btc_golos()
+    price_btc_golos = functions.get_price_btc_golos_rudexbtc(bitshares)
     # BTC/GBG, external
-    price_btc_gbg = functions.get_price_btc_gbg()
+    price_btc_gbg = functions.get_price_btc_gbg_rudexbtc(bitshares)
 
     log.info('Median-derived price BTC/gold: {:.8f}'.format(price_btc_golos / median))
     log.info('External price BTC/gold: {:.8f}'.format(price_btc_gold))
