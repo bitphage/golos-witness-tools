@@ -40,7 +40,7 @@ def main():
     with open(args.config, 'r') as ymlfile:
         conf = yaml.safe_load(ymlfile)
 
-    golos = Steem(nodes=conf['node'], keys=conf['keys'], num_retries=999999)
+    golos = Steem(nodes=conf['node'], keys=conf['keys'], num_retries=999999, mode='head')
 
     # do not begin monitoring until node will not get synced!
     while True:
