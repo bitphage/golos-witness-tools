@@ -107,9 +107,9 @@ def main():
 
     if sbd_print_rate < 10000:
         liquid_golos_emission = (total_reward_fund_steem.amount / (2 * 7)) * (100 - sbd_print_rate) / 100
-        log.info('Approximate liquid GOLOS emission per day: {:.0f}'.format(liquid_golos_emission))
+        log.info('Approximate liquid author rewards per day: {:.0f}'.format(liquid_golos_emission))
 
-    log.info('Approximate vesting GOLOS emission per day: {:.0f}'.format(total_reward_fund_steem.amount / (2 * 7)))
+    log.info('Approximate vesting author rewards per day: {:.0f}'.format(total_reward_fund_steem.amount / (2 * 7)))
 
     # USD/gold price
     price_mg_gold = functions.get_price_gold()
