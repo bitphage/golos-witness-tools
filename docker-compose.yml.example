@@ -23,14 +23,12 @@ services:
         - wss://eu.nodes.bitshares.ws\n
         - wss://bitshares.openledger.info/ws\n
         - wss://citadel.li/node\n
-        - wss://api-ru.bts.blckchnd.com\n
         - wss://api.bts.blckchnd.com"
       MARKETS: "\n
         - RUDEX.GOLOS/BTS\n
         - RUDEX.GOLOS/RUDEX.BTC\n
         - RUDEX.GOLOS/RUBLE\n
-        - RUDEX.GOLOS/USD\n
-        - RUDEX.GOLOS/CNY"
+        - RUDEX.GOLOS/RUDEX.USD"
       METRIC: weighted_average
       K: 1
       DEPTH_PCT: 20

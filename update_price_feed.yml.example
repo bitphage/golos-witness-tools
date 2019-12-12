@@ -14,16 +14,15 @@ node_bts:
   - wss://eu.nodes.bitshares.ws
   - wss://bitshares.openledger.info/ws
   - wss://citadel.li/node
-  - wss://api-ru.bts.blckchnd.com
   - wss://api.bts.blckchnd.com
+  - wss://api.bts.ai
 
 # what markets should be used for price measurements
 markets:
   - RUDEX.GOLOS/BTS
   - RUDEX.GOLOS/RUDEX.BTC
   - RUDEX.GOLOS/RUBLE
-  - RUDEX.GOLOS/USD
-  - RUDEX.GOLOS/CNY
+  - RUDEX.GOLOS/RUDEX.USDT
 
 # When several markets used, how to calculate resulting price
 # Supported metrics are:
