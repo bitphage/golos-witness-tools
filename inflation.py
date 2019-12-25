@@ -26,18 +26,24 @@ top19_weight = 1
 witness_pay_normalization_factor = 25
 
 
-def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witness_reward=False):
+def calc_inflation(
+    head_block_num, stop_block_num, virtual_supply, worker_pct, witness_pct, vesting_pct, precise_witness_reward=False
+):
     """ Calculate inflation in ranges from start block to stop block
         :param int head_block_num: start block
         :param int stop_block_num: stop block
         :param float virtual_supply: initial virtual_supply
+        :param float worker_pct: worker fund inflation percent
+        :param float witness_pct: witness pay inflation percent
+        :param float vesting_pct: vesting inflation percent
         :param bool precise_witness_reward: calculate precise witness reward; precise but slow;
                                             Gives a little better results (difference is very low)
     """
 
-    content_reward_per_period = float()
+    worker_reward_per_period = float()
     vesting_reward_per_period = float()
     witness_reward_per_period = float()
+    content_reward_per_period = float()
 
     top19_reward_per_period = float()
     timeshare_reward_per_period = float()
@@ -55,9 +61,10 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
 
         if precise_witness_reward:
 
-            content_reward = new_steem * STEEMIT_CONTENT_REWARD_PERCENT / STEEMIT_100_PERCENT
-            vesting_reward = new_steem * STEEMIT_VESTING_FUND_PERCENT / STEEMIT_100_PERCENT
-            witness_reward = new_steem - content_reward - vesting_reward
+            worker_reward = new_steem * worker_pct / STEEMIT_100_PERCENT
+            witness_reward = new_steem * vesting_pct / STEEMIT_100_PERCENT
+            vesting_reward = new_steem * vesting_pct / STEEMIT_100_PERCENT
+            content_reward = new_steem - worker_reward - witness_reward - vesting_reward
 
             witness_reward = witness_reward * STEEMIT_MAX_WITNESSES
             if head_block_num % 21 == 0:
@@ -73,6 +80,7 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
 
             new_steem = content_reward + vesting_reward + witness_reward
 
+            worker_reward_per_period += worker_reward
             content_reward_per_period += content_reward
             vesting_reward_per_period += vesting_reward
             witness_reward_per_period += witness_reward
@@ -96,6 +104,7 @@ def calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witne
     log.debug('last current_inflation_rate: {:.2%}'.format(current_inflation_rate / STEEMIT_100_PERCENT))
 
     if precise_witness_reward:
+        log.info('worker_reward_per_period: {:.0f}'.format(worker_reward_per_period))
         log.info('content_reward_per_period: {:.0f}'.format(content_reward_per_period))
         log.info('vesting_reward_per_period: {:.0f}'.format(vesting_reward_per_period))
         log.info('witness_reward_per_period: {:.0f}'.format(witness_reward_per_period))
@@ -144,18 +153,32 @@ def main():
         log.debug('override virtual_supply to: {:,.0f}'.format(args.virtual_supply))
         virtual_supply = args.virtual_supply
 
+    # get inflation params
+    median_props = golos.get_chain_properties()
+    worker_pct = median_props['worker_reward_percent']
+    witness_pct = median_props['witness_reward_percent']
+    vesting_pct = median_props['vesting_reward_percent']
+
     # current daily emission
     days = 1
     delta = timedelta(days=days)
     stop_block_num = head_block_num + delta.total_seconds() / STEEMIT_BLOCK_INTERVAL
-    calc_inflation(head_block_num, stop_block_num, virtual_supply, precise_witness_reward=True)
+    calc_inflation(
+        head_block_num,
+        stop_block_num,
+        virtual_supply,
+        worker_pct,
+        witness_pct,
+        vesting_pct,
+        precise_witness_reward=True,
+    )
 
     # long-term emission
     days = 50 * 364
     delta = timedelta(days=days)
     # calculate block_num after X years
     stop_block_num = head_block_num + delta.total_seconds() / STEEMIT_BLOCK_INTERVAL
-    calc_inflation(head_block_num, stop_block_num, virtual_supply)
+    calc_inflation(head_block_num, stop_block_num, virtual_supply, worker_pct, witness_pct, vesting_pct)
 
 
 if __name__ == '__main__':
