@@ -1,4 +1,4 @@
-node: 
+node:
   - ws://localhost:8091
 witness: foo
 keys:
@@ -36,4 +36,13 @@ props:
   posts_window: 7200
   votes_per_window: 5
   votes_window: 15
-
+  worker_reward_percent: 1000
+  witness_reward_percent: 1000
+  vesting_reward_percent: 1000
+  worker_request_creation_fee: "100 GBG"
+  worker_request_approve_min_percent: 1000
+  sbd_debt_convert_rate: 100
+  vote_regeneration_per_day: 10
+  witness_skipping_reset_time: 21600
+  witness_idleness_time: 31104000
+  account_idleness_time: 31104000

@@ -60,7 +60,7 @@
         },
         "golos": {
             "git": "https://github.com/bitfag/golos-python.git",
-            "ref": "032c3304d418ab7770ac2c1f803580d376c02b3e"
+            "ref": "4824e60e3704f345e43a1ae25c8c1b40466979a3"
         },
         "graphenelib": {
             "hashes": [
