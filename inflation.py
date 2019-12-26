@@ -62,7 +62,7 @@ def calc_inflation(
         if precise_witness_reward:
 
             worker_reward = new_steem * worker_pct / STEEMIT_100_PERCENT
-            witness_reward = new_steem * vesting_pct / STEEMIT_100_PERCENT
+            witness_reward = new_steem * witness_pct / STEEMIT_100_PERCENT
             vesting_reward = new_steem * vesting_pct / STEEMIT_100_PERCENT
             content_reward = new_steem - worker_reward - witness_reward - vesting_reward
 
