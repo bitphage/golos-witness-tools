@@ -96,7 +96,10 @@ def calculate_gbg_golos_price_bts(bitshares, markets, metric='median', depth_pct
             price2, volume2 = bitshares.get_market_center_price(tmp_market, depth_pct=20)
             price = price1 * price2
             # Limit volume by smallest volume across steps
-            volume = min(volume1, volume2 / price1)
+            try:
+                volume = min(volume1, volume2 / price1)
+            except ZeroDivisionError:
+                volume = 0
         else:
             price, volume = price1, volume1
 
