@@ -80,9 +80,9 @@ def main():
             # switch witness key to us
             log.info('switching witness key, miss_diff is: {} > {}'.format(miss_diff, conf['allowed_misses']))
             try:
-                functions.update_witness(golos, conf['witness_pubkey'], w['url'], w['props'], conf['witness'])
+                golos.witness_update(conf['witness_pubkey'], w['url'], w['props'], account=conf['witness'])
             except Exception as e:
-                log.error('failed to switch key: %s', e)
+                log.exception('failed to switch key')
             else:
                 # reset miss_count after switch
                 miss_count = current_miss_count
