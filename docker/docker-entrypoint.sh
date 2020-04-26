@@ -14,10 +14,13 @@ export key="${KEY:-key}"
 export price_source="${SOURCE:-bitshares}"
 export node_bts="${NODE_BTS:-"
   - wss://eu.nodes.bitshares.ws
-  - wss://bitshares.openledger.info/ws
-  - wss://citadel.li/node
-  - wss://api-ru.bts.blckchnd.com
-  - wss://api.bts.blckchnd.com"
+  - wss://api.bitshares.org
+  - wss://api.dex.trading
+  - wss://dex.iobanker.com:9090
+  - wss://api.bts.ai
+  - wss://api.bitshares.bhuz.info/ws
+  - wss://api.btsgo.net/ws
+  "
 }"
 export markets="${MARKETS:-"
   - RUDEX.GOLOS/BTS

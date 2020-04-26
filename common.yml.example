@@ -3,5 +3,9 @@ node:
 
 node_bts:
   - wss://eu.nodes.bitshares.ws
-  - wss://bitshares.openledger.info/ws
-  - wss://citadel.li/node
+  - wss://api.bitshares.org
+  - wss://api.dex.trading
+  - wss://dex.iobanker.com:9090
+  - wss://api.bts.ai
+  - wss://api.bitshares.bhuz.info/ws
+  - wss://api.btsgo.net/ws
