@@ -7,7 +7,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-golosscripts = "^0.3.0"
+golosscripts = "^0.3.1"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.3.0"

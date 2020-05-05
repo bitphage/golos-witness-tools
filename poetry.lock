@@ -255,7 +255,7 @@ description = "Scripts for Golos blockchain"
 name = "golosscripts"
 optional = false
 python-versions = ">=3.7,<4.0"
-version = "0.3.0"
+version = "0.3.1"
 
 [package.dependencies]
 bitshares = ">=0.5.1,<0.6.0"
@@ -651,7 +651,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "3daf1d82d6a00653bd86ba619e44343b548931388b8c89b896f53fc8e827b52a"
+content-hash = "585c27ae0175da130af0606023417dcd98dfa492cd431a175f22e125d207daf0"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -794,8 +794,8 @@ funcy = [
     {file = "funcy-1.14.tar.gz", hash = "sha256:75ee84c3b446f92e68a857c2267b15a1b49c631c9d5a87a5f063cd2d6761a5c4"},
 ]
 golosscripts = [
-    {file = "golosscripts-0.3.0-py3-none-any.whl", hash = "sha256:58212e4b63ed9276ad1c2f33635694809f3bdf04be08a08429ef4b53a64a15f7"},
-    {file = "golosscripts-0.3.0.tar.gz", hash = "sha256:90ea9e31c1916c3e4076f62feaf4548f1e0a25a2303f0d139e19e673227ddd3a"},
+    {file = "golosscripts-0.3.1-py3-none-any.whl", hash = "sha256:a99dfa7fe58aeb8c87b08c2bf746d93fb8b97292c42352bfc39ddc0ec7267819"},
+    {file = "golosscripts-0.3.1.tar.gz", hash = "sha256:bd570bf2b8f3c583e2d1ac1c63951af6f8587d711215f442cf8d22ab57266a5a"},
 ]
 graphenelib = [
     {file = "graphenelib-1.3.2-py3-none-any.whl", hash = "sha256:98c29519cb97bef30fd2a6f528a116c5b3a89315ca918313f5661b646edb1f19"},
