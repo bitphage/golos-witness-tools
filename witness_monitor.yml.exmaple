@@ -1,4 +1,4 @@
-node: 
+node:
   - ws://localhost:8091
 
 # witness to monitor
@@ -13,7 +13,7 @@ keys:
 
 # time in seconds to observe misses; witness key switch will happen whether
 # there are more misses than allowed_misses per miss_window
-miss_window: 60*60
+miss_window: 3600
 
 # number of missed blocks to allow without switching
 allowed_misses: 1
