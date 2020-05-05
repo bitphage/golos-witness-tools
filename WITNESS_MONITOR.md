@@ -37,24 +37,24 @@ private-key = key3
 
 So, having such configuration, you can always choose which node should actually produce blocks.
 
-Imagine your current active signing node is down. So, you just need to update witness to change the signing_key. This can be done by using `witness_update()` API call directly, or using script `update_witness.py` from this package.
+Imagine your current active signing node is down. So, you just need to update witness to change the signing\_key. This can be done by using `witness_update()` API call directly, or using script `update_witness.py` from **golos-scripts**.
 
 Automating switching from failed node to a working one
-==================================================
+======================================================
 
 To automate process of switching signing keys, you can use `witness_monitor.py`.
 
 How it works
 ------------
 
-At every 63 seconds (once per round) the script checks current `total_missed` counter.
+At every 30 seconds the script checks current `total_missed` counter.
 
 There are 2 tunable parameters:
 
 * `miss_window`
 * `allowed_misses`
 
-The logic is simple: switch are happening whether there are more misses detected than `allowed_misses` per `miss_window`.
+The logic is simple: switch is happening whether there are more misses detected than `allowed_misses` per `miss_window`.
 
 For example, you can allow 2 misses per 1 hour. Whether script detects 3 misses per hour, it will switch signing key.
 

@@ -12,7 +12,7 @@ Scripts
 Requirements
 ------------
 
-* golos node 0.18+
+* golos node 0.22+
 
 Installation via poetry
 -----------------------
