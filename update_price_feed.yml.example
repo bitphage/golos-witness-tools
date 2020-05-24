@@ -10,7 +10,7 @@ keys:
 source: bitshares
 
 # bitshares nodes to use
-#node_bts:
+node_bts:
   - wss://eu.nodes.bitshares.ws
   - wss://api.bitshares.org
   - wss://api.dex.trading
