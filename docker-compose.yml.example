@@ -20,12 +20,12 @@ services:
       KEY: PRIVATE-ACTIVE-KEY
       SOURCE: bitshares
       NODE_BTS: "\n
-        - wss://eu.nodes.bitshares.ws
-        - wss://api.bitshares.org
-        - wss://api.dex.trading
-        - wss://dex.iobanker.com:9090
-        - wss://api.bts.ai
-        - wss://api.bitshares.bhuz.info/ws
+        - wss://eu.nodes.bitshares.ws\n
+        - wss://api.bitshares.or\n
+        - wss://api.dex.trading\n
+        - wss://dex.iobanker.com:9090\n
+        - wss://api.bts.ai\n
+        - wss://api.bitshares.bhuz.info/ws\n
         - wss://api.btsgo.net/ws
         "
       MARKETS: "\n
