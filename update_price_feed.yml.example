@@ -6,24 +6,18 @@ keys:
   - WIF_PRIVATE_KEY
 
 # specify price source here
-# supported sources are: bitshares, kuna
-source: bitshares
+# supported sources are: graphene, kuna
+source: graphene
 
-# bitshares nodes to use
-node_bts:
-  - wss://eu.nodes.bitshares.ws
-  - wss://api.bitshares.org
-  - wss://api.dex.trading
-  - wss://dex.iobanker.com:9090
-  - wss://api.bts.ai
-  - wss://api.bitshares.bhuz.info/ws
-  - wss://api.btsgo.net/ws
+# graphene  nodes to use
+node_gph:
+  - wss://node.gph.ai
+  - wss://node.hk.graphene.fans
 
 # what markets should be used for price measurements
 markets:
-  - RUDEX.GOLOS/BTS
+  - RUDEX.GOLOS/GPH
   - RUDEX.GOLOS/RUDEX.BTC
-  - RUDEX.GOLOS/RUBLE
   - RUDEX.GOLOS/RUDEX.USDT
 
 # When several markets used, how to calculate resulting price

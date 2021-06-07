@@ -4,11 +4,11 @@ keys:
   - {{ getenv "key" }}
 
 # specify price source here
-# supported sources are: cmc, bitshares
+# supported sources are: cmc, graphene
 source: {{ getenv "price_source" }}
 
-# bitshares nodes to use
-node_bts: {{ getenv "node_bts" }}
+# graphene nodes to use
+node_gph: {{ getenv "node_gph" }}
 
 # what markets should be used for price measurements
 markets: {{ getenv "markets" }}

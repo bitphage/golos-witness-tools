@@ -11,23 +11,16 @@ export witness="${WITNESS:-foo}"
 export key="${KEY:-key}"
 
 # settings for update_price_feed.py
-export price_source="${SOURCE:-bitshares}"
-export node_bts="${NODE_BTS:-"
-  - wss://eu.nodes.bitshares.ws
-  - wss://api.bitshares.org
-  - wss://api.dex.trading
-  - wss://dex.iobanker.com:9090
-  - wss://api.bts.ai
-  - wss://api.bitshares.bhuz.info/ws
-  - wss://api.btsgo.net/ws
+export price_source="${SOURCE:-graphene}"
+export node_gph="${NODE_GPH:-"
+  - wss://node.gph.ai
+  - wss://node.hk.graphene.fans
   "
 }"
 export markets="${MARKETS:-"
-  - RUDEX.GOLOS/BTS
+  - RUDEX.GOLOS/GPH
   - RUDEX.GOLOS/RUDEX.BTC
-  - RUDEX.GOLOS/RUBLE
-  - RUDEX.GOLOS/USD
-  - RUDEX.GOLOS/CNY"
+  - RUDEX.GOLOS/RUDEX.USDT"
 }"
 export metric="${METRIC:-weighted_average}"
 export depth_pct="${DEPTH_PCT:-20}"

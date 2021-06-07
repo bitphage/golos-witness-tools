@@ -18,21 +18,15 @@ services:
       NODE: ws://golos:8091
       WITNESS: foo
       KEY: PRIVATE-ACTIVE-KEY
-      SOURCE: bitshares
-      NODE_BTS: "\n
-        - wss://eu.nodes.bitshares.ws\n
-        - wss://api.bitshares.or\n
-        - wss://api.dex.trading\n
-        - wss://dex.iobanker.com:9090\n
-        - wss://api.bts.ai\n
-        - wss://api.bitshares.bhuz.info/ws\n
-        - wss://api.btsgo.net/ws
+      SOURCE: graphene
+      NODE_GPH: "\n
+        - wss://node.gph.ai\n
+        - wss://node.hk.graphene.fans\n
         "
       MARKETS: "\n
-        - RUDEX.GOLOS/BTS\n
+        - RUDEX.GOLOS/GPH\n
         - RUDEX.GOLOS/RUDEX.BTC\n
-        - RUDEX.GOLOS/RUBLE\n
-        - RUDEX.GOLOS/RUDEX.USD"
+        - RUDEX.GOLOS/RUDEX.USDT"
       METRIC: weighted_average
       K: 1
       DEPTH_PCT: 20
